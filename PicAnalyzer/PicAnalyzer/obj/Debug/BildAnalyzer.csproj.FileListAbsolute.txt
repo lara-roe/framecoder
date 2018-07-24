@@ -1,0 +1,19 @@
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\bin\Debug\BildAnalyzer.exe.config
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\bin\Debug\BildAnalyzer.exe
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\bin\Debug\BildAnalyzer.pdb
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csprojResolveAssemblyReference.cache
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.Properties.Resources.resources
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csproj.GenerateResource.Cache
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.exe
+C:\Users\fried\source\repos\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.pdb
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\bin\Debug\BildAnalyzer.exe.config
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\bin\Debug\BildAnalyzer.exe
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\bin\Debug\BildAnalyzer.pdb
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csprojResolveAssemblyReference.cache
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.Properties.Resources.resources
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csproj.GenerateResource.Cache
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.exe
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.pdb
+C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\BildAnalyzer\BildAnalyzer\obj\Debug\BildAnalyzer.csprojAssemblyReference.cache
