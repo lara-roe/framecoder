@@ -22,22 +22,27 @@ namespace PicAnalyzer
             }
         }
 
-        public static T Load<T>(string filePath) where T : new()
+        public static ApplicationState Load(string filePath)
         {
-            T rez = new T();
-            try
+            using (Stream stream = File.Open(filePath, FileMode.Open))
             {
-                using (Stream stream = File.Open(filePath, FileMode.Open))
-                {
-                    BinaryFormatter bin = new BinaryFormatter();
-                    rez = (T)bin.Deserialize(stream);
-                }
+                BinaryFormatter bin = new BinaryFormatter();
+                return (ApplicationState)bin.Deserialize(stream);
             }
-            catch (IOException)
-            {
-            }
-            return rez;
-        }
+        }       
     }
 
+    [Serializable]
+    public class ApplicationState
+    {
+        public List<DataRow> dataRows { get; set; }
+        public string[] pFileNames { get; set; }
+        public int counter { get; set; }
+        public ApplicationState(List<DataRow> dataRows, string[] pFileNames, int counter)
+        {
+            this.dataRows = dataRows;
+            this.pFileNames = pFileNames;
+            this.counter = counter;
+        }
+    }
 }

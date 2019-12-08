@@ -4,7 +4,7 @@ using System.Text;
 namespace PicAnalyzer
 {
     [Serializable]
-    class DataRow
+    public class DataRow
     {
         public string SubName { get; set; }
         public string ImageName { get; set; }

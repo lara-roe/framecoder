@@ -24,6 +24,12 @@ namespace PicAnalyzer
             MinimumSize = new System.Drawing.Size(1000, 800); // set minimum size of window
         }
 
+        // On loading of mainwindow
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            
+        }
+
 
         // Menu items
         private void openSubjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -58,6 +64,7 @@ namespace PicAnalyzer
         {
             SaveDataRow();
             counter = counter + 1;
+            if (dataRows.Count > counter) LoadDataRow();
             if (!(counter <= pFileNames.Length - 1)) // if there are no more images to load
             {
                 SaveAndExit();
@@ -69,19 +76,11 @@ namespace PicAnalyzer
         private void PreviousButton_Click_1(object sender, EventArgs e)
         {
             counter = counter - 1;
-            RemoveDataRow(counter);
+            LoadDataRow();
             UpdateImage();
         }
 
-        // button3 = close app
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-
         // button 3 = save & exit
-    
         private void SaveButton_Click_1(object sender, EventArgs e)
         {
             SaveAndExit();
@@ -96,8 +95,9 @@ namespace PicAnalyzer
             if (counter <= pFileNames.Length - 1)
             {
                 current_image = pFileNames[counter].ToString();
-                pictureBox2.Load(current_image);
-                label1.Text = Path.GetFileName(this.current_image);
+                imageBox.Load(current_image);
+                // label1.Text = Path.GetFileName(current_image);
+                PreviousButton.Enabled = (counter != 0);
             }
         }
 
@@ -107,9 +107,9 @@ namespace PicAnalyzer
             dataRows.Insert(counter, data);
         }
 
-        protected void LoadDataRow(int index)
+        protected void LoadDataRow()
         {
-            DataRow data = dataRows[index];
+            DataRow data = dataRows[counter];
             PersonPresent.Checked = data.personPresent;
             HeadFixation.Checked = data.headFixated;
             BodyFixation.Checked = data.bodyFixated;
@@ -118,9 +118,9 @@ namespace PicAnalyzer
             CommentTextBox.Text = data.Comment;
         }
 
-        protected void RemoveDataRow(int index)
+        protected void RemoveDataRow()
         {
-            dataRows.RemoveAt(index);
+            dataRows.RemoveAt(counter);
         }
 
         protected void SaveAndExit()
@@ -145,6 +145,7 @@ namespace PicAnalyzer
 
         protected void SerializeDataRows()
         {
+            ApplicationState state = new ApplicationState(dataRows, pFileNames, counter);
             SaveFileDialog sfd = new SaveFileDialog
             {
                 AddExtension = true,
@@ -153,7 +154,7 @@ namespace PicAnalyzer
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                Serializer.Save(sfd.FileName, dataRows);
+                Serializer.Save(sfd.FileName, state);
             }
         }
 
@@ -167,13 +168,19 @@ namespace PicAnalyzer
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                dataRows = Serializer.Load<List<DataRow>>(ofd.FileName);
+                ApplicationState state = Serializer.Load(ofd.FileName);
+
+                // set properties using state
+                dataRows = state.dataRows;
+                pFileNames = state.pFileNames;
+                counter = state.counter;
+                UpdateImage();
             }
 
         }
 
         //   ------------------- define properties of radio buttons so that change will call next image  --------------------------------
-        private void radioButton1_CheckedChanged_1(object sender, EventArgs e)
+        private void HeadFixation_CheckedChanged(object sender, EventArgs e)
         {
             if (HeadFixation.Checked)
             {
@@ -187,7 +194,7 @@ namespace PicAnalyzer
             }
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void BodyFixation_CheckedChanged(object sender, EventArgs e)
         {
             if (BodyFixation.Checked)
             {
@@ -201,7 +208,7 @@ namespace PicAnalyzer
             }
         }
 
-        private void radioButton3_CheckedChanged_1(object sender, EventArgs e)
+        private void SurroundingFixation_CheckedChanged(object sender, EventArgs e)
         {
             if (SurroundingFixation.Checked)
             {
@@ -215,7 +222,7 @@ namespace PicAnalyzer
             }
         }
 
-        private void radioButton4_CheckedChanged_1(object sender, EventArgs e)
+        private void InvalidFixation_CheckedChanged(object sender, EventArgs e)
         {
             if (InvalidFixation.Checked)
             {
@@ -232,10 +239,7 @@ namespace PicAnalyzer
         // define/load different objects and their properties (if this is unnecessary and you know it, please let me know so I can make my code cleaner :) )
 
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -251,14 +255,6 @@ namespace PicAnalyzer
         {
 
         }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -269,8 +265,6 @@ namespace PicAnalyzer
         {
             
         }
-
-       
     }
 
 }
