@@ -16,7 +16,14 @@ In order to be able to adequately use the PicAnalyzer, the videos need to be alr
 
 </br>
 
-### How to use the PicAnalyzer.exe
+### How to use PicAnalyzer.exe
 <p align="justify" style="line-height:200%;">
-The button names of the PicAnalyzer explain most of its functions. Via the “Choose Subject” button all images that are to be coded of the specific participant can be loaded into the Analyzer (here ctrl + alt is usually the best way to go). The radio buttons and checkboxes can consequently be used to code which areas of the image were looked at by the participant. The checkbox will remain checked across frames unless it is unchecked. Similarly,  the chosen radio button (head, body, surroundings or invalid fixation) will remain selected. If the corresponding ROI was indeed still fixated, the “Next Image” can be used to load the next image. If a different radio button is chosen, the next image will  automatically be loaded, saving a click. Checking or unchecking the checkbox does not trigger the next image to appear. If a wrong ROI was accidentally selected the “Previous Image” button can be clicked and the button coding the frame can be selected anew. The “Save/Close”-Button can be used to save and close the app. It will automatically trigger a saving and close when all of the loaded images were coded. The PicAnalyzer yields a csv-file saving participant name, image name, and the chosen buttons (indicated by 1, all other buttons are coded 0) for each frame which can be used for further analyses. Click <a href="https://github.com/lara-roe/MobileEye/blob/master/01.csv">here</a> for an example output file.
+The button names of the PicAnalyzer explain most of its functions. Via  `file > open subject` all images that are to be coded of the specific participant can be loaded into the Analyzer (here ctrl + alt is usually the best way to go). The radio buttons and checkboxes can consequently be used to code which areas of the image were looked at by the participant. The checkbox will remain checked across frames unless it is unchecked. Similarly,  the chosen radio button (head, body, surroundings or invalid fixation) will remain selected. If the corresponding ROI was indeed still fixated, the “Next Image” can be used to load the next image. If a different radio button is chosen, the next image will  automatically be loaded, saving a click. Checking or unchecking the checkbox does not trigger the next image to appear. If a wrong ROI was accidentally selected the “Previous Image” button can be clicked and the button coding the frame can be selected anew. The “Save/Close”-Button can be used to save and close the app. It will automatically trigger a saving and close when all of the loaded images were coded. The PicAnalyzer yields a csv-file saving participant name, image name, and the chosen buttons (indicated by 1, all other buttons are coded 0) for each frame which can be used for further analyses. Click <a href="https://github.com/lara-roe/MobileEye/blob/master/01.csv">here</a> for an example output file.
 </p>
+
+### Building PicAnalyzer from source
+- Install Visual Studio 2017 (later versions probably work too!)
+- Clone / download this repository
+- Open `/PicAnalyzer/PicAnalyzer.csproj`
+- Build the project using Visual Studio
+- The `.exe` will be generated in the `/PicAnalyzer/bin/` folder.

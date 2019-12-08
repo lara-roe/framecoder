@@ -1,15 +1,9 @@
 ﻿// define namespaces
 using System;
 using System.Collections.Generic; // for list functionality
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 
 namespace PicAnalyzer
 {
@@ -48,6 +42,15 @@ namespace PicAnalyzer
             }
         }
 
+        private void saveSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SerializeDataRows();
+        }
+
+        private void loadSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UnserializeDataRows();
+        }
 
         // On-screen buttons
         // button 2 = next image
@@ -66,18 +69,19 @@ namespace PicAnalyzer
         private void PreviousButton_Click_1(object sender, EventArgs e)
         {
             counter = counter - 1;
+            RemoveDataRow(counter);
             UpdateImage();
         }
 
         // button3 = close app
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
 
         // button 3 = save & exit
-
+    
         private void SaveButton_Click_1(object sender, EventArgs e)
         {
             SaveAndExit();
@@ -135,8 +139,37 @@ namespace PicAnalyzer
             {
                 string savepath = sf.FileName.ToString();
                 File.WriteAllText(savepath, sb.ToString());
-                this.Close();
+                Close();
             }
+        }
+
+        protected void SerializeDataRows()
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = "paz",
+                Filter = "(*.paz)|*.paz"
+            };
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                Serializer.Save(sfd.FileName, dataRows);
+            }
+        }
+
+        protected void UnserializeDataRows()
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = "paz",
+                Filter = "(*.paz)|*.paz"
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                dataRows = Serializer.Load<List<DataRow>>(ofd.FileName);
+            }
+
         }
 
         //   ------------------- define properties of radio buttons so that change will call next image  --------------------------------
@@ -236,6 +269,8 @@ namespace PicAnalyzer
         {
             
         }
+
+       
     }
 
 }
