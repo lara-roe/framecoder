@@ -1,4 +1,10 @@
-C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.csprojAssemblyReference.cache
-C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.Properties.Resources.resources
-C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.csproj.GenerateResource.cache
-C:\Users\lar08ug\Documents\Experiments\Real_Life_Eyetracking\Scripte RL_ET\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\bin\Debug\PicAnalyzer.exe.config
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\bin\Debug\PicAnalyzer.exe
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\bin\Debug\PicAnalyzer.pdb
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.csprojAssemblyReference.cache
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.Properties.Resources.resources
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.csproj.GenerateResource.cache
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.exe
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.pdb
+C:\Users\lar08ug\source\repos\PicAnalyzer\PicAnalyzer\obj\Debug\PicAnalyzer.PicAnalyzer.resources
