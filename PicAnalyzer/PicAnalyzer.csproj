@@ -45,17 +45,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataRow.cs" />
-    <Compile Include="mainwindow.cs">
+    <Compile Include="src\DataRow.cs" />
+    <Compile Include="src\KeyBoardShortcuts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainwindow.Designer.cs">
+    <Compile Include="src\mainwindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\mainwindow.Designer.cs">
       <DependentUpon>mainwindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serializer.cs" />
-    <EmbeddedResource Include="mainwindow.resx">
+    <Compile Include="src\Serializer.cs" />
+    <EmbeddedResource Include="src\mainwindow.resx">
       <DependentUpon>mainwindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

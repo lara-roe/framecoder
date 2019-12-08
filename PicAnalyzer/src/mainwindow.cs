@@ -65,10 +65,6 @@ namespace PicAnalyzer
             SaveDataRow();
             counter = counter + 1;
             if (dataRows.Count > counter) LoadDataRow();
-            if (!(counter <= pFileNames.Length - 1)) // if there are no more images to load
-            {
-                SaveAndExit();
-            }
             UpdateImage();
         }
 
@@ -80,13 +76,10 @@ namespace PicAnalyzer
             UpdateImage();
         }
 
-        // button 3 = save & exit
-        private void SaveButton_Click_1(object sender, EventArgs e)
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveAndExit();
+            ExportToCSV();
         }
-
-        
 
         // ----------------------- Used Methods ----------------------------------
 
@@ -96,8 +89,8 @@ namespace PicAnalyzer
             {
                 current_image = pFileNames[counter].ToString();
                 imageBox.Load(current_image);
-                // label1.Text = Path.GetFileName(current_image);
                 PreviousButton.Enabled = (counter != 0);
+                NextButton.Enabled = (counter < pFileNames.Length - 1);
             }
         }
 
@@ -123,7 +116,7 @@ namespace PicAnalyzer
             dataRows.RemoveAt(counter);
         }
 
-        protected void SaveAndExit()
+        protected void ExportToCSV()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Subject;Image;Person;Head;Surroundings;Body;Fixation;Comment");
@@ -131,15 +124,17 @@ namespace PicAnalyzer
             {
                 sb.AppendLine(row.getAllCommaSeperated());
             }
-            SaveFileDialog sf = new SaveFileDialog();
-            // Feed the dummy name to the save dialog
-            sf.FileName = subname;
-            sf.DefaultExt = ".csv";
+            SaveFileDialog sf = new SaveFileDialog
+            {
+                FileName = subname,
+                DefaultExt = ".csv",
+                AddExtension = true,
+                Filter = "(*.csv)|*.csv"
+            };
             if (sf.ShowDialog() == DialogResult.OK)
             {
                 string savepath = sf.FileName.ToString();
                 File.WriteAllText(savepath, sb.ToString());
-                Close();
             }
         }
 
@@ -177,63 +172,6 @@ namespace PicAnalyzer
                 UpdateImage();
             }
 
-        }
-
-        //   ------------------- define properties of radio buttons so that change will call next image  --------------------------------
-        private void HeadFixation_CheckedChanged(object sender, EventArgs e)
-        {
-            if (HeadFixation.Checked)
-            {
-                SaveDataRow();
-                counter = counter + 1;
-                if (!(counter <= pFileNames.Length - 1))
-                {
-                    SaveAndExit();
-                }
-                UpdateImage();
-            }
-        }
-
-        private void BodyFixation_CheckedChanged(object sender, EventArgs e)
-        {
-            if (BodyFixation.Checked)
-            {
-                SaveDataRow();
-                counter = counter + 1;
-                if (!(counter <= pFileNames.Length - 1))
-                {
-                    SaveAndExit();
-                }
-                UpdateImage();
-            }
-        }
-
-        private void SurroundingFixation_CheckedChanged(object sender, EventArgs e)
-        {
-            if (SurroundingFixation.Checked)
-            {
-                SaveDataRow();
-                counter = counter + 1;
-                if (!(counter <= pFileNames.Length - 1))
-                {
-                    SaveAndExit();
-                }
-                UpdateImage();
-            }
-        }
-
-        private void InvalidFixation_CheckedChanged(object sender, EventArgs e)
-        {
-            if (InvalidFixation.Checked)
-            {
-                SaveDataRow();
-                counter = counter + 1;
-                if (!(counter <= pFileNames.Length - 1))
-                {
-                    SaveAndExit();
-                }
-                UpdateImage();
-            }
         }
 
         // define/load different objects and their properties (if this is unnecessary and you know it, please let me know so I can make my code cleaner :) )

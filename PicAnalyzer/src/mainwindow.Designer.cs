@@ -29,7 +29,6 @@
             private void InitializeComponent()
             {
             this.NextButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
             this.PersonPresent = new System.Windows.Forms.CheckBox();
             this.Fixations = new System.Windows.Forms.GroupBox();
             this.InvalidFixation = new System.Windows.Forms.RadioButton();
@@ -43,6 +42,7 @@
             this.openSubjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CommentTextBox = new System.Windows.Forms.TextBox();
             this.CommentLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -56,25 +56,14 @@
             // 
             this.NextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.NextButton.AutoSize = true;
-            this.NextButton.Location = new System.Drawing.Point(663, 619);
+            this.NextButton.Enabled = false;
+            this.NextButton.Location = new System.Drawing.Point(772, 612);
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(126, 50);
             this.NextButton.TabIndex = 2;
             this.NextButton.Text = "Next Image";
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click_1);
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveButton.AutoSize = true;
-            this.SaveButton.Location = new System.Drawing.Point(846, 621);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(126, 50);
-            this.SaveButton.TabIndex = 3;
-            this.SaveButton.Text = "Save/ Close";
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click_1);
             // 
             // PersonPresent
             // 
@@ -88,7 +77,6 @@
             this.PersonPresent.TabIndex = 4;
             this.PersonPresent.Text = "Person present";
             this.PersonPresent.UseVisualStyleBackColor = false;
-            this.PersonPresent.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // Fixations
             // 
@@ -116,7 +104,6 @@
             this.InvalidFixation.TabStop = true;
             this.InvalidFixation.Text = "Invalid";
             this.InvalidFixation.UseVisualStyleBackColor = true;
-            this.InvalidFixation.CheckedChanged += new System.EventHandler(this.InvalidFixation_CheckedChanged);
             // 
             // SurroundingFixation
             // 
@@ -128,7 +115,6 @@
             this.SurroundingFixation.TabStop = true;
             this.SurroundingFixation.Text = "Surroundings";
             this.SurroundingFixation.UseVisualStyleBackColor = true;
-            this.SurroundingFixation.CheckedChanged += new System.EventHandler(this.SurroundingFixation_CheckedChanged);
             // 
             // BodyFixation
             // 
@@ -140,7 +126,6 @@
             this.BodyFixation.TabStop = true;
             this.BodyFixation.Text = "Body";
             this.BodyFixation.UseVisualStyleBackColor = true;
-            this.BodyFixation.CheckedChanged += new System.EventHandler(this.BodyFixation_CheckedChanged);
             // 
             // HeadFixation
             // 
@@ -152,13 +137,13 @@
             this.HeadFixation.TabStop = true;
             this.HeadFixation.Text = "Head";
             this.HeadFixation.UseVisualStyleBackColor = true;
-            this.HeadFixation.CheckedChanged += new System.EventHandler(this.HeadFixation_CheckedChanged);
             // 
             // PreviousButton
             // 
             this.PreviousButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.PreviousButton.AutoSize = true;
-            this.PreviousButton.Location = new System.Drawing.Point(12, 621);
+            this.PreviousButton.Enabled = false;
+            this.PreviousButton.Location = new System.Drawing.Point(12, 612);
             this.PreviousButton.Name = "PreviousButton";
             this.PreviousButton.Size = new System.Drawing.Size(126, 50);
             this.PreviousButton.TabIndex = 12;
@@ -173,7 +158,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.imageBox.Location = new System.Drawing.Point(12, 27);
             this.imageBox.Name = "imageBox";
-            this.imageBox.Size = new System.Drawing.Size(777, 586);
+            this.imageBox.Size = new System.Drawing.Size(886, 577);
             this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imageBox.TabIndex = 13;
             this.imageBox.TabStop = false;
@@ -184,7 +169,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(984, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1093, 24);
             this.menuStrip.TabIndex = 15;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -193,7 +178,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openSubjectToolStripMenuItem,
             this.saveSessionToolStripMenuItem,
-            this.loadSessionToolStripMenuItem});
+            this.loadSessionToolStripMenuItem,
+            this.exportToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -201,23 +187,30 @@
             // openSubjectToolStripMenuItem
             // 
             this.openSubjectToolStripMenuItem.Name = "openSubjectToolStripMenuItem";
-            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openSubjectToolStripMenuItem.Text = "Open subject";
             this.openSubjectToolStripMenuItem.Click += new System.EventHandler(this.openSubjectToolStripMenuItem_Click);
             // 
             // saveSessionToolStripMenuItem
             // 
             this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
-            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveSessionToolStripMenuItem.Text = "Save session";
             this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
             // 
             // loadSessionToolStripMenuItem
             // 
             this.loadSessionToolStripMenuItem.Name = "loadSessionToolStripMenuItem";
-            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.loadSessionToolStripMenuItem.Text = "Load Session";
+            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadSessionToolStripMenuItem.Text = "Load session";
             this.loadSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSessionToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // CommentTextBox
             // 
@@ -248,9 +241,9 @@
             this.groupBox1.Controls.Add(this.CommentLabel);
             this.groupBox1.Controls.Add(this.Fixations);
             this.groupBox1.Controls.Add(this.PersonPresent);
-            this.groupBox1.Location = new System.Drawing.Point(795, 27);
+            this.groupBox1.Location = new System.Drawing.Point(904, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(177, 588);
+            this.groupBox1.Size = new System.Drawing.Size(177, 635);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Data Entry";
@@ -259,11 +252,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 680);
+            this.ClientSize = new System.Drawing.Size(1093, 671);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.imageBox);
             this.Controls.Add(this.PreviousButton);
-            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.NextButton);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -285,7 +277,6 @@
             #endregion
         
             private System.Windows.Forms.Button NextButton;
-            private System.Windows.Forms.Button SaveButton;
             private System.Windows.Forms.CheckBox PersonPresent;
             private System.Windows.Forms.GroupBox Fixations;
             private System.Windows.Forms.RadioButton SurroundingFixation;
@@ -302,6 +293,7 @@
             private System.Windows.Forms.TextBox CommentTextBox;
             private System.Windows.Forms.Label CommentLabel;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
     }
     }
 
