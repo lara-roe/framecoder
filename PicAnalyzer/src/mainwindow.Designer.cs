@@ -43,10 +43,10 @@
             this.saveSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CommentTextBox = new System.Windows.Forms.TextBox();
             this.CommentLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.splitVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Fixations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip.SuspendLayout();
@@ -215,6 +215,13 @@
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
+            // splitVideoToolStripMenuItem
+            // 
+            this.splitVideoToolStripMenuItem.Name = "splitVideoToolStripMenuItem";
+            this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.splitVideoToolStripMenuItem.Text = "Split and load video";
+            this.splitVideoToolStripMenuItem.Click += new System.EventHandler(this.splitVideoToolStripMenuItem_Click);
+            // 
             // CommentTextBox
             // 
             this.CommentTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -250,13 +257,6 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Data Entry";
-            // 
-            // splitVideoToolStripMenuItem
-            // 
-            this.splitVideoToolStripMenuItem.Name = "splitVideoToolStripMenuItem";
-            this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.splitVideoToolStripMenuItem.Text = "Split video";
-            this.splitVideoToolStripMenuItem.Click += new System.EventHandler(this.splitVideoToolStripMenuItem_Click);
             // 
             // PicAnalyzer
             // 
