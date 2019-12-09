@@ -7,7 +7,7 @@ namespace PicAnalyzer
 {
     public static class Serializer
     {
-        public static void Save(string filePath, object objToSerialize)
+        public static void SerializeState(string filePath, object objToSerialize)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace PicAnalyzer
             }
         }
 
-        public static ApplicationState Load(string filePath)
+        public static ApplicationState UnserializeState(string filePath)
         {
             using (Stream stream = File.Open(filePath, FileMode.Open))
             {
@@ -35,13 +35,15 @@ namespace PicAnalyzer
     [Serializable]
     public class ApplicationState
     {
+        public int[] version { get; set; }
         public List<DataRow> dataRows { get; set; }
-        public string[] pFileNames { get; set; }
+        public ImageReference imgRef { get; set; }
         public int counter { get; set; }
-        public ApplicationState(List<DataRow> dataRows, string[] pFileNames, int counter)
+        public ApplicationState(int[] version, List<DataRow> dataRows, ImageReference imgRef, int counter)
         {
+            this.version = version;
             this.dataRows = dataRows;
-            this.pFileNames = pFileNames;
+            this.imgRef = imgRef;
             this.counter = counter;
         }
     }

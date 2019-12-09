@@ -4,18 +4,19 @@ using System.Collections.Generic; // for list functionality
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
+using WK.Libraries.BetterFolderBrowserNS;
 
 namespace PicAnalyzer
 {
     partial class PicAnalyzer : Form
     {
         // Properties
+        private int[] stateVersion = { 1, 0 }; // major, minor
         private List<DataRow> dataRows;
-        private string[] pFileNames;
-        private string current_image;
-        private string images = string.Empty;
-        private string subname = string.Empty;
-        private string workdir;
+        private ImageReference imgRef;
+        private string currentImage;
+        private string subName = string.Empty;
         private int counter = 0;
 
         // constructor
@@ -35,15 +36,14 @@ namespace PicAnalyzer
         // Menu items
         private void openSubjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog
+            BetterFolderBrowser bfb = new BetterFolderBrowser
             {
-                Multiselect = true,
-                Title = "Select all images of subject" // defines text that is displayed in upper bar of dialogue window
+                Multiselect = false,
+                Title = "Open subject folder"
             };
-            DialogResult dr = ofd.ShowDialog();
-            if (dr == System.Windows.Forms.DialogResult.OK)
+            if (bfb.ShowDialog() == DialogResult.OK)
             {
-                pFileNames = ofd.FileNames;
+                imgRef = new ImageReference(bfb.SelectedPath);
                 LoadFiles();
             }
         }
@@ -85,10 +85,11 @@ namespace PicAnalyzer
         {
             int nframe = 100; // we need some dialog box for this, maybe in PickVideoFile()?
             string src = VideoSplitter.PickVideoFile();
-            string tgt = VideoSplitter.GetTemporaryDirectory();
+            string name = Path.GetFileNameWithoutExtension(src);
+            string tgt = VideoSplitter.GetTemporaryDirectory(name);
             VideoSplitter splitter = new VideoSplitter(src, tgt, nframe);
             splitter.ConvertToImgSeq();
-            pFileNames = Directory.GetFiles(tgt, "*" + splitter.format);
+            imgRef = new ImageReference(tgt);
             LoadFiles();
         }
 
@@ -96,26 +97,25 @@ namespace PicAnalyzer
 
         protected void UpdateImage()
         {
-            if (counter <= pFileNames.Length - 1)
+            if (counter <= imgRef.count - 1)
             {
-                current_image = pFileNames[counter].ToString();
-                imageBox.Load(current_image);
+                currentImage = imgRef.FileNames[counter].ToString();
+                imageBox.Load(currentImage);
                 PreviousButton.Enabled = (counter != 0);
-                NextButton.Enabled = (counter < pFileNames.Length - 1);
+                NextButton.Enabled = (counter < imgRef.count - 1);
             }
         }
 
         protected void LoadFiles()
         {
-            string dirname = Directory.GetParent(pFileNames[0]).ToString();
-            subname = Path.GetFileNameWithoutExtension(dirname);
-            dataRows = new List<DataRow>(pFileNames.Length);
+            subName = imgRef.GetSubName();
+            dataRows = new List<DataRow>(imgRef.count);
             UpdateImage();
         }
 
         protected void SaveDataRow()
         {
-            DataRow data = new DataRow(subname, current_image, PersonPresent.Checked, HeadFixation.Checked, BodyFixation.Checked, SurroundingFixation.Checked, InvalidFixation.Checked, CommentTextBox.Text);
+            DataRow data = new DataRow(subName, currentImage, PersonPresent.Checked, HeadFixation.Checked, BodyFixation.Checked, SurroundingFixation.Checked, InvalidFixation.Checked, CommentTextBox.Text);
             dataRows.Insert(counter, data);
         }
 
@@ -145,7 +145,7 @@ namespace PicAnalyzer
             }
             SaveFileDialog sf = new SaveFileDialog
             {
-                FileName = subname,
+                FileName = subName,
                 DefaultExt = ".csv",
                 AddExtension = true,
                 Filter = "(*.csv)|*.csv"
@@ -159,7 +159,7 @@ namespace PicAnalyzer
 
         protected void SerializeSession()
         {
-            ApplicationState state = new ApplicationState(dataRows, pFileNames, counter);
+            ApplicationState state = new ApplicationState(stateVersion, dataRows, imgRef, counter);
             SaveFileDialog sfd = new SaveFileDialog
             {
                 AddExtension = true,
@@ -168,7 +168,7 @@ namespace PicAnalyzer
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                Serializer.Save(sfd.FileName, state);
+                Serializer.SerializeState(sfd.FileName, state);
             }
         }
 
@@ -182,17 +182,33 @@ namespace PicAnalyzer
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                ApplicationState state = Serializer.Load(ofd.FileName);
+                ApplicationState state = Serializer.UnserializeState(ofd.FileName);
 
-                // set properties using state
-                dataRows = state.dataRows;
-                pFileNames = state.pFileNames;
-                counter = state.counter;
-                UpdateImage();
+                if (state.version[0] == stateVersion[0] & state.version[1] < stateVersion[1])
+                {
+                    // set properties using state
+                    dataRows = state.dataRows;
+                    imgRef = state.imgRef;
+                    counter = state.counter;
+                    UpdateImage();
+                }
             }
-
         }
 
+        private void exportVideoFramesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BetterFolderBrowser bfb = new BetterFolderBrowser
+            {
+                Title = "Save images in this folder",
+                Multiselect = false
+            };
+
+            if (bfb.ShowDialog() == DialogResult.OK)
+            {
+                imgRef.ExportFolder(bfb.SelectedPath);
+                Process.Start(@bfb.SelectedPath);
+            }
+        }
     }
 
 }

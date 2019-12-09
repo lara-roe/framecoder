@@ -47,6 +47,9 @@
             this.CommentTextBox = new System.Windows.Forms.TextBox();
             this.CommentLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportVideoFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Fixations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip.SuspendLayout();
@@ -178,10 +181,13 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openSubjectToolStripMenuItem,
+            this.splitVideoToolStripMenuItem,
+            this.toolStripSeparator2,
             this.saveSessionToolStripMenuItem,
             this.loadSessionToolStripMenuItem,
+            this.toolStripSeparator1,
             this.exportToolStripMenuItem,
-            this.splitVideoToolStripMenuItem});
+            this.exportVideoFramesToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -190,7 +196,7 @@
             // 
             this.openSubjectToolStripMenuItem.Name = "openSubjectToolStripMenuItem";
             this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openSubjectToolStripMenuItem.Text = "Open subject";
+            this.openSubjectToolStripMenuItem.Text = "Open subject folder";
             this.openSubjectToolStripMenuItem.Click += new System.EventHandler(this.openSubjectToolStripMenuItem_Click);
             // 
             // saveSessionToolStripMenuItem
@@ -211,14 +217,14 @@
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Text = "Export .csv";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // splitVideoToolStripMenuItem
             // 
             this.splitVideoToolStripMenuItem.Name = "splitVideoToolStripMenuItem";
             this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.splitVideoToolStripMenuItem.Text = "Split and load video";
+            this.splitVideoToolStripMenuItem.Text = "Open subject video";
             this.splitVideoToolStripMenuItem.Click += new System.EventHandler(this.splitVideoToolStripMenuItem_Click);
             // 
             // CommentTextBox
@@ -254,6 +260,23 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Data Entry";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // exportVideoFramesToolStripMenuItem
+            // 
+            this.exportVideoFramesToolStripMenuItem.Name = "exportVideoFramesToolStripMenuItem";
+            this.exportVideoFramesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportVideoFramesToolStripMenuItem.Text = "Export images";
+            this.exportVideoFramesToolStripMenuItem.Click += new System.EventHandler(this.exportVideoFramesToolStripMenuItem_Click);
             // 
             // PicAnalyzer
             // 
@@ -303,6 +326,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem splitVideoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem exportVideoFramesToolStripMenuItem;
     }
     }
 

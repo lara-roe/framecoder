@@ -56,9 +56,9 @@ namespace PicAnalyzer
             }
         }
 
-        public static string GetTemporaryDirectory()
+        public static string GetTemporaryDirectory(string name)
         {
-            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            string tempDirectory = Path.Combine(Path.GetTempPath(), name);
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
         }
