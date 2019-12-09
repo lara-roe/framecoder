@@ -69,7 +69,7 @@
             // 
             this.PersonPresent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PersonPresent.AutoSize = true;
-            this.PersonPresent.BackColor = System.Drawing.SystemColors.Menu;
+            this.PersonPresent.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.PersonPresent.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.PersonPresent.Location = new System.Drawing.Point(6, 19);
             this.PersonPresent.Name = "PersonPresent";
@@ -165,6 +165,7 @@
             // 
             // menuStrip
             // 
+            this.menuStrip.BackColor = System.Drawing.SystemColors.Window;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -187,28 +188,28 @@
             // openSubjectToolStripMenuItem
             // 
             this.openSubjectToolStripMenuItem.Name = "openSubjectToolStripMenuItem";
-            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.openSubjectToolStripMenuItem.Text = "Open subject";
             this.openSubjectToolStripMenuItem.Click += new System.EventHandler(this.openSubjectToolStripMenuItem_Click);
             // 
             // saveSessionToolStripMenuItem
             // 
             this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
-            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.saveSessionToolStripMenuItem.Text = "Save session";
             this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
             // 
             // loadSessionToolStripMenuItem
             // 
             this.loadSessionToolStripMenuItem.Name = "loadSessionToolStripMenuItem";
-            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.loadSessionToolStripMenuItem.Text = "Load session";
             this.loadSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSessionToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -252,6 +253,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1093, 671);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.imageBox);
