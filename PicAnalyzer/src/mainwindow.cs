@@ -15,6 +15,7 @@ namespace PicAnalyzer
         private string current_image;
         private string images = string.Empty;
         private string subname = string.Empty;
+        private string workdir;
         private int counter = 0;
 
         // constructor
@@ -27,16 +28,18 @@ namespace PicAnalyzer
         // On loading of mainwindow
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            
+            // Do nothing
         }
 
 
         // Menu items
         private void openSubjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Title = "Select all images of subject"; // defines text that is displayed in upper bar of dialogue window
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Multiselect = true,
+                Title = "Select all images of subject" // defines text that is displayed in upper bar of dialogue window
+            };
             DialogResult dr = ofd.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.OK)
             {
@@ -47,12 +50,12 @@ namespace PicAnalyzer
 
         private void saveSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SerializeDataRows();
+            SerializeSession();
         }
 
         private void loadSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UnserializeDataRows();
+            UnserializeSession();
         }
 
         // On-screen buttons
@@ -154,7 +157,7 @@ namespace PicAnalyzer
             }
         }
 
-        protected void SerializeDataRows()
+        protected void SerializeSession()
         {
             ApplicationState state = new ApplicationState(dataRows, pFileNames, counter);
             SaveFileDialog sfd = new SaveFileDialog
@@ -169,7 +172,7 @@ namespace PicAnalyzer
             }
         }
 
-        protected void UnserializeDataRows()
+        protected void UnserializeSession()
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -188,36 +191,6 @@ namespace PicAnalyzer
                 UpdateImage();
             }
 
-        }
-
-        // define/load different objects and their properties (if this is unnecessary and you know it, please let me know so I can make my code cleaner :) )
-
-
-        
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CommentTextBox_TextChanged(object sender, EventArgs e)
-        {
-            
         }
 
     }

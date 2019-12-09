@@ -29,7 +29,7 @@ namespace PicAnalyzer
                 BinaryFormatter bin = new BinaryFormatter();
                 return (ApplicationState)bin.Deserialize(stream);
             }
-        }       
+        }
     }
 
     [Serializable]

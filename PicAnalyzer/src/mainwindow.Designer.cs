@@ -93,7 +93,6 @@
             this.Fixations.TabIndex = 11;
             this.Fixations.TabStop = false;
             this.Fixations.Text = "Fixations";
-            this.Fixations.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // InvalidFixation
             // 
@@ -230,7 +229,6 @@
             this.CommentTextBox.Name = "CommentTextBox";
             this.CommentTextBox.Size = new System.Drawing.Size(165, 103);
             this.CommentTextBox.TabIndex = 16;
-            this.CommentTextBox.TextChanged += new System.EventHandler(this.CommentTextBox_TextChanged);
             // 
             // CommentLabel
             // 
@@ -241,7 +239,6 @@
             this.CommentLabel.Size = new System.Drawing.Size(51, 13);
             this.CommentLabel.TabIndex = 17;
             this.CommentLabel.Text = "Comment";
-            this.CommentLabel.Click += new System.EventHandler(this.label2_Click);
             // 
             // groupBox1
             // 
