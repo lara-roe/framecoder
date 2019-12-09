@@ -41,10 +41,7 @@ namespace PicAnalyzer
             if (dr == System.Windows.Forms.DialogResult.OK)
             {
                 pFileNames = ofd.FileNames;
-                string dirname = Directory.GetParent(pFileNames[0]).ToString();
-                subname = Path.GetFileNameWithoutExtension(dirname);
-                dataRows = new List<DataRow>(pFileNames.Length);
-                UpdateImage();
+                LoadFiles();
             }
         }
 
@@ -81,6 +78,17 @@ namespace PicAnalyzer
             ExportToCSV();
         }
 
+        private void splitVideoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int nframe = 100; // we need some dialog box for this, maybe in PickVideoFile()?
+            string src = VideoSplitter.PickVideoFile();
+            string tgt = VideoSplitter.GetTemporaryDirectory();
+            VideoSplitter splitter = new VideoSplitter(src, tgt, nframe);
+            splitter.ConvertToImgSeq();
+            pFileNames = Directory.GetFiles(tgt, "*" + splitter.format);
+            LoadFiles();
+        }
+
         // ----------------------- Used Methods ----------------------------------
 
         protected void UpdateImage()
@@ -92,6 +100,14 @@ namespace PicAnalyzer
                 PreviousButton.Enabled = (counter != 0);
                 NextButton.Enabled = (counter < pFileNames.Length - 1);
             }
+        }
+
+        protected void LoadFiles()
+        {
+            string dirname = Directory.GetParent(pFileNames[0]).ToString();
+            subname = Path.GetFileNameWithoutExtension(dirname);
+            dataRows = new List<DataRow>(pFileNames.Length);
+            UpdateImage();
         }
 
         protected void SaveDataRow()
@@ -203,6 +219,7 @@ namespace PicAnalyzer
         {
             
         }
+
     }
 
 }
