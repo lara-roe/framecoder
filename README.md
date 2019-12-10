@@ -9,6 +9,9 @@
 The PicAnalyzer was built using Visual Studio to facilitate the coding of fixated Regions Of Interest (ROIs) during mobile eye tracking experiments. The current implementation is applicable for four mutually exclusive ROIs – head, body, surroundings, invalid fixation. Additionally, it contains a checkbox indicating whether a person is present in the picture. The numbers of buttons and checkboxes can be easily adjusted and names can be replaced in the corresponding code. 
 </p>
 
+## Installing PicAnalyzer
+The most recently built `.exe` (experimental!) can be found on [AppVeyor](https://ci.appveyor.com/project/vankesteren/mobileeye/build/artifacts).
+
 <img src="Example_Image.png" width="100%">
 
 </br>
