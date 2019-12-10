@@ -1,8 +1,15 @@
 
 
 <p align="center">
-<img src="PicAnalyzer/assets/icon.png" width="15%">
+<img src="assets/icon.png" width="15%">
+</p>
+
 <h1 align="center">MobileEye PicAnalyzer</h1>
+
+<p align="center">
+<a href="https://ci.appveyor.com/project/vankesteren/mobileeye/branch/master">
+<img src="https://ci.appveyor.com/api/projects/status/x73hn086w80agdcp/branch/master?svg=true"></img>
+</a>
 </p>
 
 <p align="justify" style="line-height:200%;">
