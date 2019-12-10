@@ -28,6 +28,7 @@
             /// </summary>
             private void InitializeComponent()
             {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PicAnalyzer));
             this.NextButton = new System.Windows.Forms.Button();
             this.PersonPresent = new System.Windows.Forms.CheckBox();
             this.Fixations = new System.Windows.Forms.GroupBox();
@@ -40,16 +41,16 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSubjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.saveSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportVideoFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CommentTextBox = new System.Windows.Forms.TextBox();
             this.CommentLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportVideoFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Fixations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip.SuspendLayout();
@@ -195,37 +196,54 @@
             // openSubjectToolStripMenuItem
             // 
             this.openSubjectToolStripMenuItem.Name = "openSubjectToolStripMenuItem";
-            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.openSubjectToolStripMenuItem.Text = "Open subject folder";
             this.openSubjectToolStripMenuItem.Click += new System.EventHandler(this.openSubjectToolStripMenuItem_Click);
+            // 
+            // splitVideoToolStripMenuItem
+            // 
+            this.splitVideoToolStripMenuItem.Name = "splitVideoToolStripMenuItem";
+            this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.splitVideoToolStripMenuItem.Text = "Open subject video";
+            this.splitVideoToolStripMenuItem.Click += new System.EventHandler(this.splitVideoToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(175, 6);
             // 
             // saveSessionToolStripMenuItem
             // 
             this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
-            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.saveSessionToolStripMenuItem.Text = "Save session";
             this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
             // 
             // loadSessionToolStripMenuItem
             // 
             this.loadSessionToolStripMenuItem.Name = "loadSessionToolStripMenuItem";
-            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.loadSessionToolStripMenuItem.Text = "Load session";
             this.loadSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSessionToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.exportToolStripMenuItem.Text = "Export .csv";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
-            // splitVideoToolStripMenuItem
+            // exportVideoFramesToolStripMenuItem
             // 
-            this.splitVideoToolStripMenuItem.Name = "splitVideoToolStripMenuItem";
-            this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.splitVideoToolStripMenuItem.Text = "Open subject video";
-            this.splitVideoToolStripMenuItem.Click += new System.EventHandler(this.splitVideoToolStripMenuItem_Click);
+            this.exportVideoFramesToolStripMenuItem.Name = "exportVideoFramesToolStripMenuItem";
+            this.exportVideoFramesToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.exportVideoFramesToolStripMenuItem.Text = "Export images";
+            this.exportVideoFramesToolStripMenuItem.Click += new System.EventHandler(this.exportVideoFramesToolStripMenuItem_Click);
             // 
             // CommentTextBox
             // 
@@ -261,23 +279,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Data Entry";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
-            // 
-            // exportVideoFramesToolStripMenuItem
-            // 
-            this.exportVideoFramesToolStripMenuItem.Name = "exportVideoFramesToolStripMenuItem";
-            this.exportVideoFramesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportVideoFramesToolStripMenuItem.Text = "Export images";
-            this.exportVideoFramesToolStripMenuItem.Click += new System.EventHandler(this.exportVideoFramesToolStripMenuItem_Click);
-            // 
             // PicAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,6 +290,7 @@
             this.Controls.Add(this.PreviousButton);
             this.Controls.Add(this.NextButton);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "PicAnalyzer";
             this.Text = "PicAnalyzer";

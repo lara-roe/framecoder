@@ -21,7 +21,7 @@ namespace PicAnalyzer
         {
             Available, // dir exists, files available
             Empty, // dir exists, files not available
-            Unavailable // dir does not exist
+            Missing // dir does not exist
         }
 
 
@@ -29,7 +29,7 @@ namespace PicAnalyzer
         {
             if (!Directory.Exists(Dir))
             {
-                status = RefStatus.Unavailable;
+                status = RefStatus.Missing;
             }
             else
             {
@@ -52,7 +52,11 @@ namespace PicAnalyzer
                 string fileName = Path.GetFileName(fullName);
                 File.Copy(fullName, Path.Combine(tgtFolder, fileName), true);
             }
+
+            Dir = tgtFolder;
+            ParseDir();
         }
 
+        /// Create a method for recovering the directory!
     }
 }
