@@ -14,7 +14,6 @@ namespace PicAnalyzer
         public ImageReference(string srcDir)
         {
             Dir = srcDir;
-            ParseDir();
         }
 
         public enum RefStatus

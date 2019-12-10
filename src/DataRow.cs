@@ -27,7 +27,7 @@ namespace PicAnalyzer
             this.Comment                = Comment;
         }
 
-        public String getAllCommaSeperated()
+        public string getAllCommaSeperated()
         {
             StringBuilder row = new StringBuilder();
             row.Append(SubName).Append(";");

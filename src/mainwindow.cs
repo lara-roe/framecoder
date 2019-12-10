@@ -44,6 +44,7 @@ namespace PicAnalyzer
             if (bfb.ShowDialog() == DialogResult.OK)
             {
                 imgRef = new ImageReference(bfb.SelectedPath);
+                imgRef.ParseDir();
                 LoadFiles();
             }
         }
@@ -83,18 +84,19 @@ namespace PicAnalyzer
 
         private void splitVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int nframe = 100; // we need some dialog box for this, maybe in PickVideoFile()?
+            // TODO: we need some dialog box for this, maybe in PickVideoFile()?
+            int nframe = 100; 
+            int startframe = 0;
             string src = VideoSplitter.PickVideoFile();
             string name = Path.GetFileNameWithoutExtension(src);
             string tgt = VideoSplitter.GetTemporaryDirectory(name);
-            VideoSplitter splitter = new VideoSplitter(src, tgt, nframe);
-            splitter.ConvertToImgSeq();
+            VideoSplitter splitter = new VideoSplitter(src, tgt, nframe, startframe);
             imgRef = new ImageReference(tgt);
-            LoadFiles();
+            splitter.SplittingCompleted += LoadFiles;
+            splitter.SaveFrames();
         }
 
         // ----------------------- Used Methods ----------------------------------
-
         protected void UpdateImage()
         {
             if (counter <= imgRef.count - 1)
@@ -108,26 +110,42 @@ namespace PicAnalyzer
 
         protected void LoadFiles()
         {
+            imgRef.ParseDir();
             subName = imgRef.GetSubName();
             dataRows = new List<DataRow>(imgRef.count);
             UpdateImage();
         }
 
+        // overload for event-driven loading of files
+        protected void LoadFiles(object sender, EventArgs e)
+        {
+            LoadFiles();
+        }
+
         protected void SaveDataRow()
         {
-            DataRow data = new DataRow(subName, currentImage, PersonPresent.Checked, HeadFixation.Checked, BodyFixation.Checked, SurroundingFixation.Checked, InvalidFixation.Checked, CommentTextBox.Text);
+            DataRow data = new DataRow(
+                SubName:                subName,
+                ImageName:              currentImage,
+                personPresent:          PersonPresent.Checked,
+                headFixated:            HeadFixation.Checked,
+                bodyFixated:            BodyFixation.Checked,
+                surroundingsFixated:    SurroundingFixation.Checked,
+                noFixation:             InvalidFixation.Checked,
+                Comment:                CommentTextBox.Text
+            );
             dataRows.Insert(counter, data);
         }
 
         protected void LoadDataRow()
         {
             DataRow data = dataRows[counter];
-            PersonPresent.Checked = data.personPresent;
-            HeadFixation.Checked = data.headFixated;
-            BodyFixation.Checked = data.bodyFixated;
+            PersonPresent.Checked       = data.personPresent;
+            HeadFixation.Checked        = data.headFixated;
+            BodyFixation.Checked        = data.bodyFixated;
             SurroundingFixation.Checked = data.surroundingsFixated;
-            InvalidFixation.Checked = data.noFixation;
-            CommentTextBox.Text = data.Comment;
+            InvalidFixation.Checked     = data.noFixation;
+            CommentTextBox.Text         = data.Comment;
         }
 
         protected void RemoveDataRow()

@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Forms;
+using System.ComponentModel;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
@@ -11,24 +13,52 @@ namespace PicAnalyzer
         private string source;
         private string target;
         private int nframes;
+        private int startframe;
         private VideoCapture cap;
+        private readonly BackgroundWorker worker = new BackgroundWorker();
 
-        public VideoSplitter(string srcFile, string tgtFolder, int nFrames)
+        public event EventHandler<EventArgs> SplittingCompleted;
+
+
+        public VideoSplitter(string srcFile, string tgtFolder, int nFrames, int startFrame)
         {
             source = srcFile;
             target = tgtFolder;
             nframes = nFrames;
+            startframe = startFrame;
+
+            // background worker stuff
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.DoWork += Worker_DoWork;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
         }
 
-        public void ConvertToImgSeq()
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ConvertToImgSeq();
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            SplittingCompleted?.Invoke(this, e);
+        }
+
+        public void SaveFrames()
+        {
+            worker.RunWorkerAsync();
+        }
+
+        private void ConvertToImgSeq()
         {
             cap = new VideoCapture(source);
-            int count = (int)cap.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
+            int count = (int)cap.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount) - startframe;
             int stride = count / nframes;
             int width = count.ToString().Length;
             for (int i = 0; i < nframes; i++)
             {
-                int framenum = i * stride;
+                int framenum = i * stride + startframe;
                 cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, framenum);
                 Mat frame = cap.QueryFrame();
                 if (frame != null)
@@ -37,7 +67,6 @@ namespace PicAnalyzer
                     frame.ToImage<Bgr, byte>().Save(imagename);
                 }
             }
-            MessageBox.Show("Video converted");
         }
 
         public static string PickVideoFile()
