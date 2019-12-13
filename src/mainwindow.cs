@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using WK.Libraries.BetterFolderBrowserNS;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     partial class PicAnalyzer : Form
     {

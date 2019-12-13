@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicAnalyzer", "PicAnalyzer.csproj", "{D0E37F09-013A-41B9-AA0C-C5748AAAC539}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "framecoder", "framecoder.csproj", "{D0E37F09-013A-41B9-AA0C-C5748AAAC539}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9A97F24C-4868-4BD2-8BAA-7197721AAD47}
+		SolutionGuid = {EDAD49CE-304E-4B53-8B83-D23A6BD138C9}
 	EndGlobalSection
 EndGlobal

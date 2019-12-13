@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     [Serializable]
     public class DataRow

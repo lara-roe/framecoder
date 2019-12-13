@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     partial class PicAnalyzer : Form
     {

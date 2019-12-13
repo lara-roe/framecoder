@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D0E37F09-013A-41B9-AA0C-C5748AAAC539}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PicAnalyzer</RootNamespace>
-    <AssemblyName>PicAnalyzer</AssemblyName>
+    <RootNamespace>FrameCoder</RootNamespace>
+    <AssemblyName>framecoder</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

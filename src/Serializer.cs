@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     public static class Serializer
     {

@@ -1,4 +1,4 @@
-﻿namespace PicAnalyzer
+﻿namespace FrameCoder
 {
         partial class PicAnalyzer
         {
@@ -169,7 +169,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataBox.Location = new System.Drawing.Point(904, 27);
             this.dataBox.Name = "dataBox";
-            this.dataBox.Size = new System.Drawing.Size(177, 604);
+            this.dataBox.Size = new System.Drawing.Size(177, 635);
             this.dataBox.TabIndex = 19;
             this.dataBox.TabStop = false;
             this.dataBox.Text = "Data Entry";
@@ -188,7 +188,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "PicAnalyzer";
-            this.Text = "PicAnalyzer";
+            this.Text = "framecoder";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
             this.menuStrip.ResumeLayout(false);

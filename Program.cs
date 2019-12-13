@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     static class Program
     {

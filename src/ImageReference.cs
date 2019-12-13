@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     [Serializable]
     public class ImageReference

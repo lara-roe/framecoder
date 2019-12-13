@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using YamlDotNet.Serialization;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     public class BoundControls
     {

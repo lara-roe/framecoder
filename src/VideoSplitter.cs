@@ -5,7 +5,7 @@ using System.ComponentModel;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
-namespace PicAnalyzer
+namespace FrameCoder
 {
     public class VideoSplitter
     {
