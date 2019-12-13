@@ -56,7 +56,7 @@
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(126, 50);
             this.NextButton.TabIndex = 2;
-            this.NextButton.Text = "Next Image";
+            this.NextButton.Text = "Next frame";
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click_1);
             // 
@@ -69,7 +69,7 @@
             this.PreviousButton.Name = "PreviousButton";
             this.PreviousButton.Size = new System.Drawing.Size(126, 50);
             this.PreviousButton.TabIndex = 12;
-            this.PreviousButton.Text = "Previous Image";
+            this.PreviousButton.Text = "Previous frame";
             this.PreviousButton.UseVisualStyleBackColor = true;
             this.PreviousButton.Click += new System.EventHandler(this.PreviousButton_Click_1);
             // 

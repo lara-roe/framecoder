@@ -11,30 +11,35 @@
 </a>
 </p>
 
-<p align="justify" style="line-height:200%;">
-The framecoder was built using Visual Studio to facilitate the coding of fixated Regions Of Interest (ROIs) during mobile eye tracking experiments. The current implementation is applicable for four mutually exclusive ROIs – head, body, surroundings, invalid fixation. Additionally, it contains a checkbox indicating whether a person is present in the picture. The numbers of buttons and checkboxes can be easily adjusted and names can be replaced in the corresponding code. 
+Framecoder is an open source application for Windows enabling fast manual coding of video frames, for example for labeling Regions Of Interest (ROIs) during mobile eye tracking experiments.
 </p>
 
 ## Installing framecoder
-The most recently built `.exe` (experimental!) can be found on [AppVeyor](https://ci.appveyor.com/project/vankesteren/framecoder/build/artifacts).
+The most recently built version of framecoder (experimental!) can be found on [AppVeyor](https://ci.appveyor.com/project/vankesteren/framecoder/build/artifacts). Download it, unzip to a nice location, and run `framecoder.exe`.
 
-<img src="Example_Image.png" width="100%">
+<img src="img/welcome_screen.png" width="100%"></img>
 
-</br>
 
-## Data format
-<p align="justify" style="line-height:200%;">
-In order to be able to adequately use the framecoder, the videos need to be already split into their respective frames. The application was programmed in such a way that the name of the overarching folder containing all the frame pictures will be used for the designation of the output file name and all entries of its first column. The length can accordingly be adjusted in the software code (currently set to two characters).
-</p>
+## Input format
+Input videos need to be already split into their respective frames, and each video needs to have its own folder. Video splitting support is in development. 
 
-</br>
+Via  `file > open subject folder` all images that are to be coded for a specific video can be loaded into the session. 
 
-## How to use
-<p align="justify" style="line-height:200%;">
-The button names of the framecoder explain most of its functions. Via  `file > open subject` all images that are to be coded of the specific participant can be loaded into the Analyzer (here ctrl + alt is usually the best way to go). The radio buttons and checkboxes can consequently be used to code which areas of the image were looked at by the participant. The checkbox will remain checked across frames unless it is unchecked. Similarly,  the chosen radio button (head, body, surroundings or invalid fixation) will remain selected. If the corresponding ROI was indeed still fixated, the “Next Image” can be used to load the next image. If a different radio button is chosen, the next image will  automatically be loaded, saving a click. Checking or unchecking the checkbox does not trigger the next image to appear. If a wrong ROI was accidentally selected the “Previous Image” button can be clicked and the button coding the frame can be selected anew. The “Save/Close”-Button can be used to save and close the app. It will automatically trigger a saving and close when all of the loaded images were coded. The framecoder yields a csv-file saving participant name, image name, and the chosen buttons (indicated by 1, all other buttons are coded 0) for each frame which can be used for further analyses. Click <a href="https://github.com/lara-roe/MobileEye/blob/master/01.csv">here</a> for an example output file.
-</p>
+## Coding frames
+The radio buttons and checkboxes can be used to code the frames. For quick usage, each data entry control is associated with a shortcut key (1-5). For example, pressing the `1` key on the keyboard will toggle the first checkbox. The next and previous frames can be selected using the right and left arrow keys.
+
+#### Advanced: Custom coding
+By editing the text file `assets/config.yaml` in the framecoder folder before startup, custom data entry controls can be added to the data entry fields. Only checkboxes, radiobuttons, and text fields are supported. The shortcuts can also be edited here.
+
+## Output format
+Under `file > Export .csv` a semicolon-separated data file with all the codings can be exported to the disk. The data file will look somewhat like so:
+
+<img src="img/data_file.png" width="50%" align="center"></img>
+
+Additionally, an entire session can be saved and loaded using `file > Save session` and `file > Load session`, so you can save your work and continue where you left off.
 
 ## Building framecoder from source
+Framecoder is written in `C#` using `.NET`. Dependencies are managed via `NuGet`.
 - Install Visual Studio 2017 (later versions probably work too!)
 - Clone / download this repository
 - Open `/framecoder/framecoder.csproj`
