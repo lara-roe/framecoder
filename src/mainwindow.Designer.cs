@@ -1,6 +1,6 @@
 ﻿namespace FrameCoder
 {
-        partial class PicAnalyzer
+        partial class FrameCoder
         {
             /// <summary>
             /// Required designer variable.
@@ -28,7 +28,7 @@
             /// </summary>
             private void InitializeComponent()
             {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PicAnalyzer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrameCoder));
             this.NextButton = new System.Windows.Forms.Button();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.imageBox = new System.Windows.Forms.PictureBox();

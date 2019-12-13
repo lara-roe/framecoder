@@ -32,6 +32,8 @@ namespace FrameCoder
             {
                 switch (key)
                 {
+                    case 0:
+                        return Keys.D0;
                     case 1:
                         return Keys.D1;
                     case 2:
@@ -170,7 +172,10 @@ namespace FrameCoder
                         shortcuts[yamlControls[i].GetKey()] = () =>
                         {
                             CheckBox cb = parent.Controls.Find(cbname, true)[0] as CheckBox;
-                            cb.Checked = !cb.Checked;
+                            if (cb.Enabled)
+                            {
+                                cb.Checked = !cb.Checked;
+                            }
                         };
                         break;
                     case "radiobutton":
@@ -180,7 +185,10 @@ namespace FrameCoder
                             shortcuts[yamlControls[i].options[j].GetKey()] = () =>
                             {
                                 RadioButton rb = parent.Controls.Find(rbname, true)[0] as RadioButton;
-                                rb.Checked = true;
+                                if (rb.Enabled)
+                                {
+                                    rb.Checked = true;
+                                }
                             };
                         }
                         break;
@@ -189,7 +197,10 @@ namespace FrameCoder
                         shortcuts[yamlControls[i].GetKey()] = () =>
                         {
                             TextBox tb = parent.Controls.Find(tfname, true)[0] as TextBox;
-                            tb.Focus();
+                            if (tb.Enabled)
+                            {
+                                tb.Focus();
+                            }
                         };
                         break;
                     default:

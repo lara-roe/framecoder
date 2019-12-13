@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FrameCoder
 {
-    partial class PicAnalyzer : Form
+    partial class FrameCoder : Form
     {
         private Dictionary<Keys, Action> shortKeys = new Dictionary<Keys, Action>();
 

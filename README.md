@@ -1,9 +1,8 @@
 
 
 <p align="center">
-<img src="assets/icon.png" width="15%">
+<img src="assets/icon.png" width="150px">
 </p>
-
 <h1 align="center">framecoder</h1>
 
 <p align="center">

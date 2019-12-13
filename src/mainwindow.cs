@@ -9,7 +9,7 @@ using WK.Libraries.BetterFolderBrowserNS;
 
 namespace FrameCoder
 {
-    partial class PicAnalyzer : Form
+    partial class FrameCoder : Form
     {
         // Properties
         private int[] stateVersion = { 2, 0 }; // major, minor
@@ -21,7 +21,7 @@ namespace FrameCoder
         private int ImgIndex = 0;
         
         // constructor
-        public PicAnalyzer()
+        public FrameCoder()
         {
             InitializeComponent();
             MinimumSize = new System.Drawing.Size(1000, 800); // set minimum size of window
@@ -44,6 +44,8 @@ namespace FrameCoder
             bdCtrls.CreateControls();
             // add the shortcuts
             bdCtrls.RegisterShortcuts(shortKeys);
+            // disable the data box
+            dataBox.Enabled = false;
         }
 
 
@@ -81,11 +83,11 @@ namespace FrameCoder
             {
                 SaveDataRow();
                 ImgIndex = ImgIndex + 1;
+                UpdateImage();
                 if (dataRows.Count > ImgIndex)
                 {
                     LoadDataRow(); // this does not work!
                 }
-                UpdateImage();
             }   
         }
         private void NextButton_Click_1(object sender, EventArgs e)
@@ -137,8 +139,9 @@ namespace FrameCoder
             {
                 currentImage = imgRef.FileNames[ImgIndex].ToString();
                 imageBox.Load(currentImage);
-                PreviousButton.Enabled = (ImgIndex != 0);
-                NextButton.Enabled = (ImgIndex < imgRef.count - 1);
+                PreviousButton.Enabled = ImgIndex != 0;
+                NextButton.Enabled = ImgIndex < imgRef.count - 1;
+                dataBox.Enabled = imgRef.status == ImageReference.RefStatus.Available;
             }
         }
 
@@ -158,13 +161,20 @@ namespace FrameCoder
         {
             Dictionary<string, object> data = bdCtrls.GetData();
             DataRow dr = new DataRow(subName, data);
-            dataRows.Insert(ImgIndex, dr);
+            if (dataRows.Count > ImgIndex)
+            {
+                dataRows[ImgIndex] = dr;
+            }
+            else
+            {
+                dataRows.Add(dr);
+            }
         }
 
         protected void LoadDataRow()
         {
-            DataRow dr = dataRows[ImgIndex];
-            bdCtrls.SetData(dr.Data);
+            Dictionary<string, object> data = dataRows[ImgIndex].Data;
+            bdCtrls.SetData(data);
         }
 
         protected void RemoveDataRow()
@@ -218,8 +228,8 @@ namespace FrameCoder
             SaveFileDialog sfd = new SaveFileDialog
             {
                 AddExtension = true,
-                DefaultExt = "paz",
-                Filter = "(*.paz)|*.paz"
+                DefaultExt = "fcs",
+                Filter = "(*.fcs)|*.fcs"
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -232,8 +242,8 @@ namespace FrameCoder
             OpenFileDialog ofd = new OpenFileDialog
             {
                 AddExtension = true,
-                DefaultExt = "paz",
-                Filter = "(*.paz)|*.paz"
+                DefaultExt = "fcs",
+                Filter = "(*.fcs)|*.fcs"
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -244,6 +254,7 @@ namespace FrameCoder
                     // set properties using state
                     dataRows = state.dataRows;
                     imgRef = state.imgRef;
+                    subName = imgRef.GetSubName();
                     ImgIndex = state.ImgIndex;
 
                     // update controls
@@ -251,7 +262,8 @@ namespace FrameCoder
                     bdCtrls.yaml = state.yaml;
                     bdCtrls.ParseYaml();
                     bdCtrls.CreateControls();
-                    
+                    bdCtrls.RegisterShortcuts(shortKeys);
+
                     UpdateImage();
                 }
             }

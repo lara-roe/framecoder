@@ -13,7 +13,7 @@ namespace FrameCoder
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PicAnalyzer());
+            Application.Run(new FrameCoder());
         }
     }
 }
