@@ -24,7 +24,8 @@ namespace FrameCoder
         public FrameCoder()
         {
             InitializeComponent();
-            MinimumSize = new System.Drawing.Size(1000, 800); // set minimum size of window
+            Size = new System.Drawing.Size(800, 600);
+            MinimumSize = new System.Drawing.Size(800, 600); // set minimum size of window
         }
 
         // On loading of mainwindow: dynamic component generation
@@ -46,6 +47,8 @@ namespace FrameCoder
             bdCtrls.RegisterShortcuts(shortKeys);
             // disable the data box
             dataBox.Enabled = false;
+            // load icon as image
+            imageBox.Load(Path.Combine(Environment.CurrentDirectory, "assets", "splash.png"));
         }
 
 

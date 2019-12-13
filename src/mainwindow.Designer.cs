@@ -167,14 +167,14 @@
             // 
             this.dataBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataBox.Location = new System.Drawing.Point(904, 27);
+            this.dataBox.Location = new System.Drawing.Point(904, 12);
             this.dataBox.Name = "dataBox";
-            this.dataBox.Size = new System.Drawing.Size(177, 635);
+            this.dataBox.Size = new System.Drawing.Size(177, 650);
             this.dataBox.TabIndex = 19;
             this.dataBox.TabStop = false;
             this.dataBox.Text = "Data Entry";
             // 
-            // PicAnalyzer
+            // FrameCoder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -187,7 +187,7 @@
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "PicAnalyzer";
+            this.Name = "FrameCoder";
             this.Text = "framecoder";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
