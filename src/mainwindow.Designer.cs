@@ -30,12 +30,6 @@
             {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PicAnalyzer));
             this.NextButton = new System.Windows.Forms.Button();
-            this.PersonPresent = new System.Windows.Forms.CheckBox();
-            this.Fixations = new System.Windows.Forms.GroupBox();
-            this.InvalidFixation = new System.Windows.Forms.RadioButton();
-            this.SurroundingFixation = new System.Windows.Forms.RadioButton();
-            this.BodyFixation = new System.Windows.Forms.RadioButton();
-            this.HeadFixation = new System.Windows.Forms.RadioButton();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.imageBox = new System.Windows.Forms.PictureBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -48,13 +42,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportVideoFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CommentTextBox = new System.Windows.Forms.TextBox();
-            this.CommentLabel = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Fixations.SuspendLayout();
+            this.dataBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // NextButton
@@ -69,78 +59,6 @@
             this.NextButton.Text = "Next Image";
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click_1);
-            // 
-            // PersonPresent
-            // 
-            this.PersonPresent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PersonPresent.AutoSize = true;
-            this.PersonPresent.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.PersonPresent.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.PersonPresent.Location = new System.Drawing.Point(6, 19);
-            this.PersonPresent.Name = "PersonPresent";
-            this.PersonPresent.Size = new System.Drawing.Size(97, 17);
-            this.PersonPresent.TabIndex = 4;
-            this.PersonPresent.Text = "Person present";
-            this.PersonPresent.UseVisualStyleBackColor = false;
-            // 
-            // Fixations
-            // 
-            this.Fixations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Fixations.AutoSize = true;
-            this.Fixations.Controls.Add(this.InvalidFixation);
-            this.Fixations.Controls.Add(this.SurroundingFixation);
-            this.Fixations.Controls.Add(this.BodyFixation);
-            this.Fixations.Controls.Add(this.HeadFixation);
-            this.Fixations.Location = new System.Drawing.Point(6, 42);
-            this.Fixations.Name = "Fixations";
-            this.Fixations.Size = new System.Drawing.Size(165, 124);
-            this.Fixations.TabIndex = 11;
-            this.Fixations.TabStop = false;
-            this.Fixations.Text = "Fixations";
-            // 
-            // InvalidFixation
-            // 
-            this.InvalidFixation.AutoSize = true;
-            this.InvalidFixation.Location = new System.Drawing.Point(6, 88);
-            this.InvalidFixation.Name = "InvalidFixation";
-            this.InvalidFixation.Size = new System.Drawing.Size(56, 17);
-            this.InvalidFixation.TabIndex = 3;
-            this.InvalidFixation.TabStop = true;
-            this.InvalidFixation.Text = "Invalid";
-            this.InvalidFixation.UseVisualStyleBackColor = true;
-            // 
-            // SurroundingFixation
-            // 
-            this.SurroundingFixation.AutoSize = true;
-            this.SurroundingFixation.Location = new System.Drawing.Point(6, 65);
-            this.SurroundingFixation.Name = "SurroundingFixation";
-            this.SurroundingFixation.Size = new System.Drawing.Size(87, 17);
-            this.SurroundingFixation.TabIndex = 2;
-            this.SurroundingFixation.TabStop = true;
-            this.SurroundingFixation.Text = "Surroundings";
-            this.SurroundingFixation.UseVisualStyleBackColor = true;
-            // 
-            // BodyFixation
-            // 
-            this.BodyFixation.AutoSize = true;
-            this.BodyFixation.Location = new System.Drawing.Point(6, 42);
-            this.BodyFixation.Name = "BodyFixation";
-            this.BodyFixation.Size = new System.Drawing.Size(49, 17);
-            this.BodyFixation.TabIndex = 1;
-            this.BodyFixation.TabStop = true;
-            this.BodyFixation.Text = "Body";
-            this.BodyFixation.UseVisualStyleBackColor = true;
-            // 
-            // HeadFixation
-            // 
-            this.HeadFixation.AutoSize = true;
-            this.HeadFixation.Location = new System.Drawing.Point(6, 19);
-            this.HeadFixation.Name = "HeadFixation";
-            this.HeadFixation.Size = new System.Drawing.Size(51, 17);
-            this.HeadFixation.TabIndex = 0;
-            this.HeadFixation.TabStop = true;
-            this.HeadFixation.Text = "Head";
-            this.HeadFixation.UseVisualStyleBackColor = true;
             // 
             // PreviousButton
             // 
@@ -245,39 +163,16 @@
             this.exportVideoFramesToolStripMenuItem.Text = "Export images";
             this.exportVideoFramesToolStripMenuItem.Click += new System.EventHandler(this.exportVideoFramesToolStripMenuItem_Click);
             // 
-            // CommentTextBox
+            // dataBox
             // 
-            this.CommentTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CommentTextBox.Location = new System.Drawing.Point(6, 185);
-            this.CommentTextBox.Multiline = true;
-            this.CommentTextBox.Name = "CommentTextBox";
-            this.CommentTextBox.Size = new System.Drawing.Size(165, 103);
-            this.CommentTextBox.TabIndex = 16;
-            // 
-            // CommentLabel
-            // 
-            this.CommentLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CommentLabel.AutoSize = true;
-            this.CommentLabel.Location = new System.Drawing.Point(3, 169);
-            this.CommentLabel.Name = "CommentLabel";
-            this.CommentLabel.Size = new System.Drawing.Size(51, 13);
-            this.CommentLabel.TabIndex = 17;
-            this.CommentLabel.Text = "Comment";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dataBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.CommentTextBox);
-            this.groupBox1.Controls.Add(this.CommentLabel);
-            this.groupBox1.Controls.Add(this.Fixations);
-            this.groupBox1.Controls.Add(this.PersonPresent);
-            this.groupBox1.Location = new System.Drawing.Point(904, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(177, 635);
-            this.groupBox1.TabIndex = 18;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Data Entry";
+            this.dataBox.Location = new System.Drawing.Point(904, 27);
+            this.dataBox.Name = "dataBox";
+            this.dataBox.Size = new System.Drawing.Size(177, 604);
+            this.dataBox.TabIndex = 19;
+            this.dataBox.TabStop = false;
+            this.dataBox.Text = "Data Entry";
             // 
             // PicAnalyzer
             // 
@@ -285,7 +180,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1093, 671);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.dataBox);
             this.Controls.Add(this.imageBox);
             this.Controls.Add(this.PreviousButton);
             this.Controls.Add(this.NextButton);
@@ -295,13 +190,9 @@
             this.Name = "PicAnalyzer";
             this.Text = "PicAnalyzer";
             this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.Fixations.ResumeLayout(false);
-            this.Fixations.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,12 +201,6 @@
             #endregion
         
             private System.Windows.Forms.Button NextButton;
-            private System.Windows.Forms.CheckBox PersonPresent;
-            private System.Windows.Forms.GroupBox Fixations;
-            private System.Windows.Forms.RadioButton SurroundingFixation;
-            private System.Windows.Forms.RadioButton BodyFixation;
-            private System.Windows.Forms.RadioButton HeadFixation;
-            private System.Windows.Forms.RadioButton InvalidFixation;
             private System.Windows.Forms.Button PreviousButton;
             private System.Windows.Forms.PictureBox imageBox;
             private System.Windows.Forms.MenuStrip menuStrip;
@@ -323,14 +208,12 @@
             private System.Windows.Forms.ToolStripMenuItem openSubjectToolStripMenuItem;
             private System.Windows.Forms.ToolStripMenuItem saveSessionToolStripMenuItem;
             private System.Windows.Forms.ToolStripMenuItem loadSessionToolStripMenuItem;
-            private System.Windows.Forms.TextBox CommentTextBox;
-            private System.Windows.Forms.Label CommentLabel;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem splitVideoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exportVideoFramesToolStripMenuItem;
+        private System.Windows.Forms.GroupBox dataBox;
     }
     }
 

@@ -1,27 +1,30 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace PicAnalyzer
 {
     partial class PicAnalyzer : Form
     {
-        // --------------------- Keyboard Shortcuts --------------------------------
+        private Dictionary<Keys, Action> shortKeys = new Dictionary<Keys, Action>();
+
+        // Default keyboard shortcuts
+        private void RegisterDefaultShortcuts()
+        {
+            shortKeys.Add(Keys.Right, NextButton_Click);
+            shortKeys.Add(Keys.Left, PreviousButton_Click);
+        }
+
+        
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            switch (keyData)
+            if (shortKeys.ContainsKey(keyData))
             {
-                case Keys.Right:
-                    if (NextButton.Enabled) NextButton_Click_1(this, EventArgs.Empty);
-                    return true;
-                case Keys.Left:
-                    if (PreviousButton.Enabled) PreviousButton_Click_1(this, EventArgs.Empty);
-                    return true;
-                case Keys.D1:
-                    // do something...
-                    return true;
-                default:
-                    return base.ProcessCmdKey(ref msg, keyData);
+                shortKeys[keyData]();
+                return true;
             }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
+        
     }
 }

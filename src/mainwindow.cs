@@ -12,13 +12,14 @@ namespace PicAnalyzer
     partial class PicAnalyzer : Form
     {
         // Properties
-        private int[] stateVersion = { 1, 0 }; // major, minor
+        private int[] stateVersion = { 2, 0 }; // major, minor
         private List<DataRow> dataRows;
         private ImageReference imgRef;
+        private BoundControls bdCtrls;
         private string currentImage;
         private string subName = string.Empty;
-        private int counter = 0;
-
+        private int ImgIndex = 0;
+        
         // constructor
         public PicAnalyzer()
         {
@@ -26,10 +27,23 @@ namespace PicAnalyzer
             MinimumSize = new System.Drawing.Size(1000, 800); // set minimum size of window
         }
 
-        // On loading of mainwindow
+        // On loading of mainwindow: dynamic component generation
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // Do nothing
+            // Register the default shortcuts
+            RegisterDefaultShortcuts();
+            // Dynamically create components from yaml
+            // Parse yaml and create data objects
+            bdCtrls = new BoundControls(dataBox);
+            // find default YAML file
+            string assetsDir = Path.Combine(Environment.CurrentDirectory, "assets", "config.yaml");
+            bdCtrls.LoadYamlFile(assetsDir);
+            // parse YAML
+            bdCtrls.ParseYaml();
+            // create the controls to add to the data entry box
+            bdCtrls.CreateControls();
+            // add the shortcuts
+            bdCtrls.RegisterShortcuts(shortKeys);
         }
 
 
@@ -61,20 +75,40 @@ namespace PicAnalyzer
 
         // On-screen buttons
         // button 2 = next image
+        private void NextButton_Click()
+        {
+            if (NextButton.Enabled)
+            {
+                SaveDataRow();
+                ImgIndex = ImgIndex + 1;
+                if (dataRows.Count > ImgIndex)
+                {
+                    LoadDataRow(); // this does not work!
+                }
+                UpdateImage();
+            }   
+        }
         private void NextButton_Click_1(object sender, EventArgs e)
         {
-            SaveDataRow();
-            counter = counter + 1;
-            if (dataRows.Count > counter) LoadDataRow();
-            UpdateImage();
+            NextButton_Click();
         }
 
+
+
         // button 4: load previous image and erase previously added row in datarows
+        private void PreviousButton_Click()
+        {
+            if (PreviousButton.Enabled)
+            {
+                SaveDataRow();
+                ImgIndex = ImgIndex - 1;
+                LoadDataRow();
+                UpdateImage();
+            }
+        }
         private void PreviousButton_Click_1(object sender, EventArgs e)
         {
-            counter = counter - 1;
-            LoadDataRow();
-            UpdateImage();
+            PreviousButton_Click();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -99,12 +133,12 @@ namespace PicAnalyzer
         // ----------------------- Used Methods ----------------------------------
         protected void UpdateImage()
         {
-            if (counter <= imgRef.count - 1)
+            if (ImgIndex <= imgRef.count - 1)
             {
-                currentImage = imgRef.FileNames[counter].ToString();
+                currentImage = imgRef.FileNames[ImgIndex].ToString();
                 imageBox.Load(currentImage);
-                PreviousButton.Enabled = (counter != 0);
-                NextButton.Enabled = (counter < imgRef.count - 1);
+                PreviousButton.Enabled = (ImgIndex != 0);
+                NextButton.Enabled = (ImgIndex < imgRef.count - 1);
             }
         }
 
@@ -115,8 +149,6 @@ namespace PicAnalyzer
             dataRows = new List<DataRow>(imgRef.count);
             UpdateImage();
         }
-
-        // overload for event-driven loading of files
         protected void LoadFiles(object sender, EventArgs e)
         {
             LoadFiles();
@@ -124,43 +156,42 @@ namespace PicAnalyzer
 
         protected void SaveDataRow()
         {
-            DataRow data = new DataRow(
-                SubName:                subName,
-                ImageName:              currentImage,
-                personPresent:          PersonPresent.Checked,
-                headFixated:            HeadFixation.Checked,
-                bodyFixated:            BodyFixation.Checked,
-                surroundingsFixated:    SurroundingFixation.Checked,
-                noFixation:             InvalidFixation.Checked,
-                Comment:                CommentTextBox.Text
-            );
-            dataRows.Insert(counter, data);
+            Dictionary<string, object> data = bdCtrls.GetData();
+            DataRow dr = new DataRow(subName, data);
+            dataRows.Insert(ImgIndex, dr);
         }
 
         protected void LoadDataRow()
         {
-            DataRow data = dataRows[counter];
-            PersonPresent.Checked       = data.personPresent;
-            HeadFixation.Checked        = data.headFixated;
-            BodyFixation.Checked        = data.bodyFixated;
-            SurroundingFixation.Checked = data.surroundingsFixated;
-            InvalidFixation.Checked     = data.noFixation;
-            CommentTextBox.Text         = data.Comment;
+            DataRow dr = dataRows[ImgIndex];
+            bdCtrls.SetData(dr.Data);
         }
 
         protected void RemoveDataRow()
         {
-            dataRows.RemoveAt(counter);
+            dataRows.RemoveAt(ImgIndex);
         }
 
         protected void ExportToCSV()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Subject;Image;Person;Head;Surroundings;Body;Fixation;Comment");
+            // basic colnames
+            sb.Append("Subject;");
+            // data-bound colnames
+            string[] colnames = bdCtrls.GetNames();
+            foreach (string name in colnames)
+            {
+                sb.Append(name).Append(";");
+            }
+            sb.Append(Environment.NewLine);
+
+            // then append a line for data
             foreach (DataRow row in dataRows)
             {
                 sb.AppendLine(row.getAllCommaSeperated());
             }
+
+            // save
             SaveFileDialog sf = new SaveFileDialog
             {
                 FileName = subName,
@@ -177,7 +208,13 @@ namespace PicAnalyzer
 
         protected void SerializeSession()
         {
-            ApplicationState state = new ApplicationState(stateVersion, dataRows, imgRef, counter);
+            ApplicationState state = new ApplicationState(
+                version: stateVersion, 
+                dataRows: dataRows, 
+                imgRef: imgRef, 
+                yaml: bdCtrls.yaml, 
+                ImgIndex: ImgIndex
+            );
             SaveFileDialog sfd = new SaveFileDialog
             {
                 AddExtension = true,
@@ -202,12 +239,19 @@ namespace PicAnalyzer
             {
                 ApplicationState state = Serializer.UnserializeState(ofd.FileName);
 
-                if (state.version[0] == stateVersion[0] & state.version[1] < stateVersion[1])
+                if (state.version[0] == stateVersion[0] & state.version[1] <= stateVersion[1])
                 {
                     // set properties using state
                     dataRows = state.dataRows;
                     imgRef = state.imgRef;
-                    counter = state.counter;
+                    ImgIndex = state.ImgIndex;
+
+                    // update controls
+                    bdCtrls.RemoveControls();
+                    bdCtrls.yaml = state.yaml;
+                    bdCtrls.ParseYaml();
+                    bdCtrls.CreateControls();
+                    
                     UpdateImage();
                 }
             }

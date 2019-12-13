@@ -7,7 +7,7 @@ namespace PicAnalyzer
 {
     public static class Serializer
     {
-        public static void SerializeState(string filePath, object objToSerialize)
+        public static void SerializeState(string filePath, ApplicationState objToSerialize)
         {
             try
             {
@@ -38,13 +38,15 @@ namespace PicAnalyzer
         public int[] version { get; set; }
         public List<DataRow> dataRows { get; set; }
         public ImageReference imgRef { get; set; }
-        public int counter { get; set; }
-        public ApplicationState(int[] version, List<DataRow> dataRows, ImageReference imgRef, int counter)
+        public string yaml { get; set; }
+        public int ImgIndex { get; set; }
+        public ApplicationState(int[] version, List<DataRow> dataRows, ImageReference imgRef, string yaml, int ImgIndex)
         {
             this.version = version;
             this.dataRows = dataRows;
+            this.yaml = yaml;
             this.imgRef = imgRef;
-            this.counter = counter;
+            this.ImgIndex = ImgIndex;
         }
     }
 }
