@@ -1,0 +1,13 @@
+version: '{build}'
+
+configuration: Release
+
+cache: packages -> **\packages.config
+
+build:
+  project: framecoder.csproj
+  verbosity: minimal
+
+artifacts:
+- path: bin/Release
+  name: framecoder
