@@ -51,7 +51,6 @@ namespace FrameCoder
             imageBox.Load(Path.Combine(Environment.CurrentDirectory, "assets", "splash.png"));
         }
 
-
         // Menu items
         private void openSubjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -285,6 +284,20 @@ namespace FrameCoder
                 imgRef.ExportFolder(bfb.SelectedPath);
                 Process.Start(@bfb.SelectedPath);
             }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "Framecoder version " + stateVersion[0] + "." + stateVersion[1];
+
+            AboutBox aboutBox = new AboutBox("1.0.0", stateVersion[0] + "." + stateVersion[1]);
+            aboutBox.Show();
+        }
+        
+
+        private void howToUseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/vankesteren/framecoder#input-format");
         }
     }
 
