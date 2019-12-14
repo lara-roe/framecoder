@@ -142,7 +142,7 @@ namespace FrameCoder
         {
             frameLabel.Text = 
                 (ImgIndex + 1) + " / " + imgRef.count + Environment.NewLine +
-                currentImage;
+                Path.GetFileName(currentImage);
         }
 
         protected void UpdateImage()
