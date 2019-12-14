@@ -137,12 +137,21 @@ namespace FrameCoder
         }
 
         // ----------------------- Used Methods ----------------------------------
+
+        protected void UpdateFrameLabel()
+        {
+            frameLabel.Text = 
+                (ImgIndex + 1) + " / " + imgRef.count + Environment.NewLine +
+                currentImage;
+        }
+
         protected void UpdateImage()
         {
             if (ImgIndex <= imgRef.count - 1)
             {
                 currentImage = imgRef.FileNames[ImgIndex].ToString();
                 imageBox.Load(currentImage);
+                UpdateFrameLabel();
                 PreviousButton.Enabled = ImgIndex != 0;
                 NextButton.Enabled = ImgIndex < imgRef.count - 1;
                 dataBox.Enabled = imgRef.status == ImageReference.RefStatus.Available;
