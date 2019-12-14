@@ -8,11 +8,13 @@ namespace FrameCoder
     public class DataRow
     {
         public string SubName { get; set; }
+        public string CurrentImage { get; set; }
         public Dictionary<string, object> Data { get; set; }
 
-        public DataRow(string SubName, Dictionary<string, object> Data)
+        public DataRow(string SubName, string CurrentImage, Dictionary<string, object> Data)
         {
             this.SubName = SubName;
+            this.CurrentImage = CurrentImage;
             this.Data = Data;
         }
         
@@ -20,6 +22,7 @@ namespace FrameCoder
         {
             StringBuilder row = new StringBuilder();
             row.Append(SubName).Append(";");
+            row.Append(CurrentImage).Append(";");
             foreach (string key in Data.Keys)
             {
                 row.Append(Data[key]).Append(";");

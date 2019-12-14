@@ -35,12 +35,12 @@ namespace FrameCoder
     [Serializable]
     public class ApplicationState
     {
-        public int[] version { get; set; }
+        public Version version { get; set; }
         public List<DataRow> dataRows { get; set; }
         public ImageReference imgRef { get; set; }
         public string yaml { get; set; }
         public int ImgIndex { get; set; }
-        public ApplicationState(int[] version, List<DataRow> dataRows, ImageReference imgRef, string yaml, int ImgIndex)
+        public ApplicationState(Version version, List<DataRow> dataRows, ImageReference imgRef, string yaml, int ImgIndex)
         {
             this.version = version;
             this.dataRows = dataRows;

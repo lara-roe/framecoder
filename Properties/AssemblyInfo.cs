@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("framecoder")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Quickly code video frames")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("framecoder")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("GPL-3 © 2019 Lara Rösler, Erik-Jan van Kesteren")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

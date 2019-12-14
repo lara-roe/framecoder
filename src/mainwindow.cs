@@ -6,13 +6,15 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using WK.Libraries.BetterFolderBrowserNS;
+using System.Reflection;
 
 namespace FrameCoder
 {
     partial class FrameCoder : Form
     {
         // Properties
-        private int[] stateVersion = { 2, 0 }; // major, minor
+        private Version stateVersion = new Version(3, 0);
+        private Version appVersion = Assembly.GetExecutingAssembly().GetName().Version;
         private List<DataRow> dataRows;
         private ImageReference imgRef;
         private BoundControls bdCtrls;
@@ -162,7 +164,7 @@ namespace FrameCoder
         protected void SaveDataRow()
         {
             Dictionary<string, object> data = bdCtrls.GetData();
-            DataRow dr = new DataRow(subName, data);
+            DataRow dr = new DataRow(subName, currentImage, data);
             if (dataRows.Count > ImgIndex)
             {
                 dataRows[ImgIndex] = dr;
@@ -188,7 +190,7 @@ namespace FrameCoder
         {
             StringBuilder sb = new StringBuilder();
             // basic colnames
-            sb.Append("Subject;");
+            sb.Append("Subject;Image;");
             // data-bound colnames
             string[] colnames = bdCtrls.GetNames();
             foreach (string name in colnames)
@@ -251,7 +253,7 @@ namespace FrameCoder
             {
                 ApplicationState state = Serializer.UnserializeState(ofd.FileName);
 
-                if (state.version[0] == stateVersion[0] & state.version[1] <= stateVersion[1])
+                if (state.version.Major == stateVersion.Major & state.version.Minor <= stateVersion.Minor)
                 {
                     // set properties using state
                     dataRows = state.dataRows;
@@ -288,9 +290,7 @@ namespace FrameCoder
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string message = "Framecoder version " + stateVersion[0] + "." + stateVersion[1];
-
-            AboutBox aboutBox = new AboutBox("1.0.0", stateVersion[0] + "." + stateVersion[1]);
+            AboutBox aboutBox = new AboutBox(appVersion.ToString(2), stateVersion.ToString(2));
             aboutBox.Show();
         }
         
