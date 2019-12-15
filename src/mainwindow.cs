@@ -125,15 +125,14 @@ namespace FrameCoder
         private void splitVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: we need some dialog box for this, maybe in PickVideoFile()?
-            int nframe = 100; 
-            int startframe = 0;
             string src = VideoSplitter.PickVideoFile();
             string name = Path.GetFileNameWithoutExtension(src);
             string tgt = VideoSplitter.GetTemporaryDirectory(name);
-            VideoSplitter splitter = new VideoSplitter(src, tgt, nframe, startframe);
+            VideoSplitter splitter = new VideoSplitter(src, tgt);
+            splitter.ShowDialog();
             imgRef = new ImageReference(tgt);
             splitter.SplittingCompleted += LoadFiles;
-            splitter.SaveFrames();
+            // splitter.SaveFrames();
         }
 
         // ----------------------- Used Methods ----------------------------------
