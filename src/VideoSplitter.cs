@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using WK.Libraries.BetterFolderBrowserNS;
 
 namespace FrameCoder
 {
@@ -19,10 +20,10 @@ namespace FrameCoder
         public event EventHandler<EventArgs> SplittingCompleted;
 
 
-        public VideoSplitter(string srcFile, string tgtFolder)
+        public VideoSplitter(string srcFile)
         {
             InitializeComponent();
-            SplitConfig = new VideoSplitConfig(0, 100, srcFile, tgtFolder);
+            SplitConfig = new VideoSplitConfig(0, 100, srcFile);
             Frames = new List<Mat>(SplitConfig.NFrames);
             FrameNums = new List<int>(SplitConfig.NFrames);
 
@@ -42,12 +43,11 @@ namespace FrameCoder
             public string TargetFolder { get; set; }
             public string Format { get; set; }
 
-            public VideoSplitConfig(int StartFrame, int NFrames, string SourceFile, string TargetFolder)
+            public VideoSplitConfig(int StartFrame, int NFrames, string SourceFile)
             {
                 this.StartFrame = StartFrame;
                 this.NFrames = NFrames;
                 this.SourceFile = SourceFile;
-                this.TargetFolder = TargetFolder;
                 Format = ".jpg";
             }
         }
@@ -60,12 +60,18 @@ namespace FrameCoder
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            Cursor = Cursors.Default;
             SplittingCompleted?.Invoke(this, e);
         }
 
         public void SaveFrames()
         {
             Worker.RunWorkerAsync();
+        }
+
+        public string GetFolder()
+        {
+            return SplitConfig.TargetFolder;
         }
 
         private void GetFramesFromVideo()
@@ -79,8 +85,8 @@ namespace FrameCoder
             {
                 int framenum = i * stride + SplitConfig.StartFrame;
                 Cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, framenum);
-                Frames[i] = Cap.QueryFrame();
-                FrameNums[i] = framenum;
+                Frames.Add(Cap.QueryFrame());
+                FrameNums.Add(framenum);
                 LoadFrameInWindow(i);
             }
         }
@@ -91,6 +97,10 @@ namespace FrameCoder
             if (FrameIndex == 0)
             {
                 FirstFrame.Image = Frames[FrameIndex];
+            }
+            if (FrameIndex == SplitConfig.NFrames - 1)
+            {
+                LastFrame.Image = Frames[FrameIndex];
             }
         }
 
@@ -125,12 +135,34 @@ namespace FrameCoder
                 return null;
             }
         }
-
-        public static string GetTemporaryDirectory(string name)
+        
+        private void convertButton_Click(object sender, EventArgs e)
         {
-            string tempDirectory = Path.Combine(Path.GetTempPath(), name);
-            Directory.CreateDirectory(tempDirectory);
-            return tempDirectory;
+            SplitConfig.NFrames = (int)nFramesControl.Value;
+            SplitConfig.StartFrame = (int)startFrameControl.Value;
+            Cursor = Cursors.WaitCursor;
+            if (Worker.IsBusy)
+            {
+                Worker.CancelAsync();
+            }
+            Worker.RunWorkerAsync();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            BetterFolderBrowser bfb = new BetterFolderBrowser
+            {
+                Multiselect = false,
+                Title = "Subject folder"
+            };
+            if (bfb.ShowDialog() == DialogResult.OK)
+            {
+                SplitConfig.TargetFolder = bfb.SelectedPath;
+                Cursor = Cursors.WaitCursor;
+                SaveFramesToDisk();
+                SplittingCompleted?.Invoke(this, e);
+                Close();
+            }
         }
     }
 }

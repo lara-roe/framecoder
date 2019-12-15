@@ -127,11 +127,11 @@ namespace FrameCoder
             // TODO: we need some dialog box for this, maybe in PickVideoFile()?
             string src = VideoSplitter.PickVideoFile();
             string name = Path.GetFileNameWithoutExtension(src);
-            string tgt = VideoSplitter.GetTemporaryDirectory(name);
-            VideoSplitter splitter = new VideoSplitter(src, tgt);
+            VideoSplitter splitter = new VideoSplitter(src);
             splitter.ShowDialog();
+            string tgt = splitter.GetFolder();
             imgRef = new ImageReference(tgt);
-            splitter.SplittingCompleted += LoadFiles;
+            LoadFiles();
             // splitter.SaveFrames();
         }
 
