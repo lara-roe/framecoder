@@ -17,16 +17,18 @@ namespace FrameCoder
         private List<DataRow> dataRows;
         private ImageReference imgRef;
         private BoundControls bdCtrls;
+        private string fileArg;
         private string currentImage;
         private string subName = string.Empty;
         private int ImgIndex = 0;
         
         // constructor
-        public FrameCoder()
+        public FrameCoder(string file)
         {
             InitializeComponent();
             Size = new System.Drawing.Size(800, 600);
             MinimumSize = new System.Drawing.Size(800, 600); // set minimum size of window
+            fileArg = file;
         }
 
         // On loading of mainwindow: dynamic component generation
@@ -38,7 +40,7 @@ namespace FrameCoder
             // Parse yaml and create data objects
             bdCtrls = new BoundControls(dataBox);
             // find default YAML file
-            string assetsDir = Path.Combine(Environment.CurrentDirectory, "assets", "config.yaml");
+            string assetsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.yaml");
             bdCtrls.LoadYamlFile(assetsDir);
             // parse YAML
             bdCtrls.ParseYaml();
@@ -49,7 +51,13 @@ namespace FrameCoder
             // disable the data box
             dataBox.Enabled = false;
             // load icon as image
-            imageBox.Load(Path.Combine(Environment.CurrentDirectory, "assets", "splash.png"));
+            imageBox.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "splash.png"));
+
+            // if opened with file, load it!
+            if (fileArg != null)
+            {
+                UnserializeSession(fileArg);
+            }
         }
 
         // Menu items
@@ -75,7 +83,16 @@ namespace FrameCoder
 
         private void loadSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UnserializeSession();
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = "fcs",
+                Filter = "Framecoder Session (*.fcs)|*.fcs"
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                UnserializeSession(ofd.FileName);
+            }
         }
 
         // On-screen buttons
@@ -250,7 +267,7 @@ namespace FrameCoder
             {
                 AddExtension = true,
                 DefaultExt = "fcs",
-                Filter = "(*.fcs)|*.fcs"
+                Filter = "Framecoder session (*.fcs)|*.fcs"
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -258,35 +275,54 @@ namespace FrameCoder
             }
         }
 
-        protected void UnserializeSession()
+        protected void UnserializeSession(string fileName)
         {
-            OpenFileDialog ofd = new OpenFileDialog
-            {
-                AddExtension = true,
-                DefaultExt = "fcs",
-                Filter = "(*.fcs)|*.fcs"
-            };
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                ApplicationState state = Serializer.UnserializeState(ofd.FileName);
+            ApplicationState state = Serializer.UnserializeState(fileName);
 
-                if (state.version.Major == stateVersion.Major & state.version.Minor <= stateVersion.Minor)
+            if (state.version.Major == stateVersion.Major & state.version.Minor <= stateVersion.Minor)
+            {
+                // check if images are available and repair if necessary.
+                ImageReference newRef = new ImageReference(state.imgRef.Dir);
+                newRef.ParseDir();
+                if (newRef.status == ImageReference.RefStatus.Missing || newRef.status == ImageReference.RefStatus.Empty)
                 {
-                    // set properties using state
-                    dataRows = state.dataRows;
-                    imgRef = state.imgRef;
-                    subName = imgRef.GetSubName();
-                    ImgIndex = state.ImgIndex;
-
-                    // update controls
-                    bdCtrls.RemoveControls();
-                    bdCtrls.yaml = state.yaml;
-                    bdCtrls.ParseYaml();
-                    bdCtrls.CreateControls();
-                    bdCtrls.RegisterShortcuts(shortKeys);
-
-                    UpdateImage();
+                    DialogResult repair = MessageBox.Show("Images could not be found. Press OK to select the folder.", "Frames missing", MessageBoxButtons.YesNo);
+                    if (repair == DialogResult.Yes)
+                    {
+                        // repair the image link
+                        newRef.RepairImageLink();
+                        if (!Serializer.ImgRefIsValid(newRef, state.imgRef))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
+                // image reference is now correct, proceed with loading the session!
+
+                // set properties using state
+                dataRows = state.dataRows;
+                imgRef = newRef;
+                subName = imgRef.GetSubName();
+                ImgIndex = state.ImgIndex;
+
+                // update controls
+                bdCtrls.RemoveControls();
+                bdCtrls.yaml = state.yaml;
+                bdCtrls.ParseYaml();
+                bdCtrls.CreateControls();
+                bdCtrls.RegisterShortcuts(shortKeys);
+
+                // finally, load the image
+                imgRef.ParseDir();
+                UpdateImage();
+            }
+            else
+            {
+                MessageBox.Show("Incompatible Framecoder Session version: " + state.version.ToString(2), "State version error.");
             }
         }
 

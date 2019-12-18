@@ -20,7 +20,7 @@ The most recently built version of framecoder (experimental!) can be found on [A
 </p>
 
 ## Input format
-Framecoder expects a folder of frames per video. Via  `File > Open subject folder` all images that are to be coded for a specific video can be loaded into the session. Alternatively, videos can be split into frames directly by using `File > Convert video to frames`.
+Framecoder expects a folder of frames per video with the `.jpg` file extension. Via  `File > Open subject folder` all images that are to be coded for a specific video can be loaded into the session. Alternatively, videos can be split into frames directly by using `File > Convert video to frames`.
 
 The folder name is used as the values in the `Subject` column for the exported csv.
 

@@ -11,7 +11,7 @@ namespace FrameCoder
         public AboutBox(string version, string stateversion)
         {
             InitializeComponent();
-            pictureBox1.ImageLocation = Path.Combine(Environment.CurrentDirectory, "assets", "icon.png");
+            pictureBox1.ImageLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "icon.png");
             label1.Text =
                 "Framecoder version " + version + Environment.NewLine +
                 "State version " + stateversion + Environment.NewLine +

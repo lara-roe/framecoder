@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using WK.Libraries.BetterFolderBrowserNS;
+using System.Windows.Forms;
 
 namespace FrameCoder
 {
@@ -57,5 +59,18 @@ namespace FrameCoder
         }
 
         /// Create a method for recovering the directory!
+        public void RepairImageLink()
+        {
+            BetterFolderBrowser bfb = new BetterFolderBrowser
+            {
+                Multiselect = false,
+                Title = "Subject folder" 
+            };
+            if (bfb.ShowDialog() == DialogResult.OK)
+            {
+                Dir = bfb.SelectedFolder;
+                ParseDir();
+            }
+        }
     }
 }
