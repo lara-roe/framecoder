@@ -89,6 +89,12 @@
     <Compile Include="src\VideoSplitter.designer.cs">
       <DependentUpon>VideoSplitter.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\YamlEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\YamlEditor.designer.cs">
+      <DependentUpon>YamlEditor.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="src\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,8 +114,14 @@
     <EmbeddedResource Include="src\VideoSplitter.resx">
       <DependentUpon>VideoSplitter.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="assets\config.yaml">
+    <EmbeddedResource Include="src\YamlEditor.resx">
+      <DependentUpon>YamlEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="assets\config.default.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

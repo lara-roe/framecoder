@@ -1,0 +1,30 @@
+---
+# checkboxes result in a column with 1/0
+- type: checkbox 
+  title: Person present
+  name: person_present
+  key: 1
+
+# radiobuttons result in a column with string levels (name)
+- type: radiobutton
+  title: Fixation
+  name: fixation
+  options:
+    - title: Head
+      name: head
+      key: 2
+    - title: Body
+      name: body
+      key: 3
+    - title: Surroundings
+      name: surroundings
+      key: 4
+    - title: Invalid
+      name: invalid
+      key: 5
+
+# textfields result in a string column
+# - type: textfield
+#   title: Comment
+#   name: comment
+#   key: 6

@@ -40,8 +40,8 @@ namespace FrameCoder
             // Parse yaml and create data objects
             bdCtrls = new BoundControls(dataBox);
             // find default YAML file
-            string assetsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.yaml");
-            bdCtrls.LoadYamlFile(assetsDir);
+            string yamlFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.yaml");
+            bdCtrls.LoadYamlFile(yamlFile);
             // parse YAML
             bdCtrls.ParseYaml();
             // create the controls to add to the data entry box
@@ -336,6 +336,21 @@ namespace FrameCoder
         private void howToUseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/vankesteren/framecoder#input-format");
+        }
+
+        private void configEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            YamlEditor editor = new YamlEditor(bdCtrls.yaml);
+            
+            if (editor.ShowDialog() == DialogResult.OK)
+            {
+                // update controls
+                bdCtrls.RemoveControls();
+                bdCtrls.yaml = editor.yaml;
+                bdCtrls.ParseYaml();
+                bdCtrls.CreateControls();
+                bdCtrls.RegisterShortcuts(shortKeys);
+            }
         }
     }
 
