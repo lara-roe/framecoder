@@ -1,5 +1,3 @@
-
-
 <p align="center">
 <img src="assets/icon.png" width="150px">
 </p>

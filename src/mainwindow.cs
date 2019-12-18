@@ -4,7 +4,6 @@ using System.Collections.Generic; // for list functionality
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 using WK.Libraries.BetterFolderBrowserNS;
 using System.Reflection;
 
@@ -125,15 +124,22 @@ namespace FrameCoder
         private void splitVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: we need some dialog box for this, maybe in PickVideoFile()?
-            int nframe = 100; 
-            int startframe = 0;
             string src = VideoSplitter.PickVideoFile();
+            if (src == null)
+            {
+                return;
+            }
             string name = Path.GetFileNameWithoutExtension(src);
-            string tgt = VideoSplitter.GetTemporaryDirectory(name);
-            VideoSplitter splitter = new VideoSplitter(src, tgt, nframe, startframe);
+            VideoSplitter splitter = new VideoSplitter(src);
+            splitter.ShowDialog();
+            string tgt = splitter.GetFolder();
+            if (tgt == null)
+            {
+                return;
+            }
             imgRef = new ImageReference(tgt);
-            splitter.SplittingCompleted += LoadFiles;
-            splitter.SaveFrames();
+            LoadFiles();
+            // splitter.SaveFrames();
         }
 
         // ----------------------- Used Methods ----------------------------------
@@ -155,6 +161,8 @@ namespace FrameCoder
                 PreviousButton.Enabled = ImgIndex != 0;
                 NextButton.Enabled = ImgIndex < imgRef.count - 1;
                 dataBox.Enabled = imgRef.status == ImageReference.RefStatus.Available;
+                exportToolStripMenuItem.Enabled = imgRef.status == ImageReference.RefStatus.Available;
+                saveSessionToolStripMenuItem.Enabled = imgRef.status == ImageReference.RefStatus.Available;
             }
         }
 
@@ -282,25 +290,10 @@ namespace FrameCoder
             }
         }
 
-        private void exportVideoFramesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BetterFolderBrowser bfb = new BetterFolderBrowser
-            {
-                Title = "Save images in this folder",
-                Multiselect = false
-            };
-
-            if (bfb.ShowDialog() == DialogResult.OK)
-            {
-                imgRef.ExportFolder(bfb.SelectedPath);
-                Process.Start(@bfb.SelectedPath);
-            }
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox aboutBox = new AboutBox(appVersion.ToString(2), stateVersion.ToString(2));
-            aboutBox.Show();
+            aboutBox.ShowDialog();
         }
         
 
