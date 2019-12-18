@@ -41,7 +41,6 @@
             this.loadSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportVideoFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,8 +111,7 @@
             this.saveSessionToolStripMenuItem,
             this.loadSessionToolStripMenuItem,
             this.toolStripSeparator1,
-            this.exportToolStripMenuItem,
-            this.exportVideoFramesToolStripMenuItem});
+            this.exportToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -121,54 +119,49 @@
             // openSubjectToolStripMenuItem
             // 
             this.openSubjectToolStripMenuItem.Name = "openSubjectToolStripMenuItem";
-            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.openSubjectToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openSubjectToolStripMenuItem.Text = "Open subject folder";
             this.openSubjectToolStripMenuItem.Click += new System.EventHandler(this.openSubjectToolStripMenuItem_Click);
             // 
             // splitVideoToolStripMenuItem
             // 
             this.splitVideoToolStripMenuItem.Name = "splitVideoToolStripMenuItem";
-            this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.splitVideoToolStripMenuItem.Text = "Open subject video";
+            this.splitVideoToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.splitVideoToolStripMenuItem.Text = "Convert video to frames";
             this.splitVideoToolStripMenuItem.Click += new System.EventHandler(this.splitVideoToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
             // 
             // saveSessionToolStripMenuItem
             // 
+            this.saveSessionToolStripMenuItem.Enabled = false;
             this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
-            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.saveSessionToolStripMenuItem.Text = "Save session";
             this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
             // 
             // loadSessionToolStripMenuItem
             // 
             this.loadSessionToolStripMenuItem.Name = "loadSessionToolStripMenuItem";
-            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.loadSessionToolStripMenuItem.Text = "Load session";
             this.loadSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSessionToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(198, 6);
             // 
             // exportToolStripMenuItem
             // 
+            this.exportToolStripMenuItem.Enabled = false;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.exportToolStripMenuItem.Text = "Export .csv";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.exportToolStripMenuItem.Text = "Export to csv";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
-            // 
-            // exportVideoFramesToolStripMenuItem
-            // 
-            this.exportVideoFramesToolStripMenuItem.Name = "exportVideoFramesToolStripMenuItem";
-            this.exportVideoFramesToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.exportVideoFramesToolStripMenuItem.Text = "Export images";
-            this.exportVideoFramesToolStripMenuItem.Click += new System.EventHandler(this.exportVideoFramesToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -260,7 +253,6 @@
         private System.Windows.Forms.ToolStripMenuItem splitVideoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem exportVideoFramesToolStripMenuItem;
         private System.Windows.Forms.GroupBox dataBox;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
