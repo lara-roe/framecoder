@@ -4,7 +4,6 @@ using System.Collections.Generic; // for list functionality
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 using WK.Libraries.BetterFolderBrowserNS;
 using System.Reflection;
 
