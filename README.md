@@ -15,13 +15,14 @@ Framecoder is an open source application for Windows enabling fast manual coding
 ## Installing framecoder
 The most recently built version of framecoder (experimental!) can be found on [AppVeyor](https://ci.appveyor.com/project/vankesteren/framecoder/build/artifacts). Download it, unzip to a nice location, and run `framecoder.exe`.
 
-<img src="img/welcome_screen.png" width="100%"></img>
-
+<p align="center">
+<img src="img/welcome_screen.png"></img>
+</p>
 
 ## Input format
-Input videos need to be already split into their respective frames, and each video needs to have its own folder. Video splitting support is in development. 
+Framecoder expects a folder of frames per video. Via  `File > Open subject folder` all images that are to be coded for a specific video can be loaded into the session. Alternatively, videos can be split into frames directly by using `File > Convert video to frames`.
 
-Via  `file > open subject folder` all images that are to be coded for a specific video can be loaded into the session. 
+The folder name is used as the values in the `Subject` column for the exported csv.
 
 ## Coding frames
 The radio buttons and checkboxes can be used to code the frames. For quick usage, each data entry control is associated with a shortcut key (1-5). For example, pressing the `1` key on the keyboard will toggle the first checkbox. The next and previous frames can be selected using the right and left arrow keys.
@@ -30,11 +31,13 @@ The radio buttons and checkboxes can be used to code the frames. For quick usage
 By editing the text file `assets/config.yaml` in the framecoder folder before startup, custom data entry controls can be added to the data entry fields. Only checkboxes, radiobuttons, and text fields are supported. The shortcuts can also be edited here.
 
 ## Output format
-Under `file > Export .csv` a semicolon-separated data file with all the codings can be exported to the disk. The data file will look somewhat like so:
+Under `File > Export to csv` a semicolon-separated data file with all the codings can be exported to the disk. The data file will look somewhat like so:
 
-<img src="img/data_file.png" width="50%" align="center"></img>
+<p align="center">
+<img src="img/data_file.png"></img>
+</p>
 
-Additionally, an entire session can be saved and loaded using `file > Save session` and `file > Load session`, so you can save your work and continue where you left off.
+Additionally, an entire session can be saved and loaded to the custom `Framecoder Session (.fcs)` file format using `File > Save session` and `File > Load session`, so you can save your work and continue where you left off.
 
 ## Building framecoder from source
 Framecoder is written in `C#` using `.NET`. Dependencies are managed via `NuGet`.
