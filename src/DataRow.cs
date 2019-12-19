@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
@@ -22,7 +23,7 @@ namespace FrameCoder
         {
             StringBuilder row = new StringBuilder();
             row.Append(SubName).Append(";");
-            row.Append(CurrentImage).Append(";");
+            row.Append(Path.GetFileName(CurrentImage)).Append(";");
             foreach (string key in Data.Keys)
             {
                 row.Append(Data[key]).Append(";");

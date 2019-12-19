@@ -175,8 +175,8 @@
             // configEditorToolStripMenuItem
             // 
             this.configEditorToolStripMenuItem.Name = "configEditorToolStripMenuItem";
-            this.configEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.configEditorToolStripMenuItem.Text = "Data entry";
+            this.configEditorToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.configEditorToolStripMenuItem.Text = "Data entry configuration";
             this.configEditorToolStripMenuItem.Click += new System.EventHandler(this.configEditorToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
