@@ -1,8 +1,5 @@
 version: '{build}'
 
-init:
-  - git config --global core.autocrlf input
-
 configuration: Release
 
 cache: packages -> **\packages.config

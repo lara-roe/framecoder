@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using YamlDotNet.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FrameCoder
 {
@@ -20,7 +22,11 @@ namespace FrameCoder
             // constructor
             parent = Parent;
             string fallback_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.default.yaml");
-            yaml_fallback = File.ReadAllText(fallback_path);
+            using (StreamReader streamReader = new StreamReader(fallback_path, Encoding.UTF8))
+            {
+                string text = streamReader.ReadToEnd();
+                yaml_fallback = Regex.Replace(text, @"\r\n|\n\r|\n|\r", "\r\n"); // ensure CRLF line endings
+            }
         }
 
         public class YamlControl
@@ -63,7 +69,11 @@ namespace FrameCoder
 
         public void LoadYamlFile(string yamlPath)
         {
-            yaml = File.ReadAllText(yamlPath);
+            using (StreamReader streamReader = new StreamReader(yamlPath, Encoding.UTF8))
+            {
+                string text = streamReader.ReadToEnd();
+                yaml = Regex.Replace(text, @"\r\n|\n\r|\n|\r", "\r\n"); // ensure CRLF line endings
+            }
         }
 
         public void ParseYaml()
