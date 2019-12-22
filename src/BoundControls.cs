@@ -11,6 +11,7 @@ namespace FrameCoder
     public class BoundControls
     {
         public string yaml;
+        private string yaml_fallback;
         private GroupBox parent;
         private List<YamlControl> yamlControls;
 
@@ -18,6 +19,8 @@ namespace FrameCoder
         {
             // constructor
             parent = Parent;
+            string fallback_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.default.yaml");
+            yaml_fallback = File.ReadAllText(fallback_path);
         }
 
         public class YamlControl
@@ -66,7 +69,19 @@ namespace FrameCoder
         public void ParseYaml()
         {
             IDeserializer deserializer = new DeserializerBuilder().Build();
-            yamlControls = deserializer.Deserialize<List<YamlControl>>(yaml);
+            try
+            {
+                yamlControls = deserializer.Deserialize<List<YamlControl>>(yaml);
+            }
+            catch (Exception e)
+            {
+                yaml = yaml_fallback;
+                yamlControls = deserializer.Deserialize<List<YamlControl>>(yaml);
+                MessageBox.Show(
+                    "Could not parse yaml. Falling back to default data entry config. Error:" + 
+                    Environment.NewLine + Environment.NewLine + 
+                    e.Message, "Yaml parsing error.");
+            }
         }
 
 
