@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FrameCoder
 {
@@ -19,7 +21,11 @@ namespace FrameCoder
         {
             // load default yaml
             string yamlFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.default.yaml");
-            yaml = File.ReadAllText(yamlFile);
+            using (StreamReader streamReader = new StreamReader(yamlFile, Encoding.UTF8))
+            {
+                string text = streamReader.ReadToEnd();
+                yaml = Regex.Replace(text, @"\r\n|\n\r|\n|\r", "\r\n"); // ensure CRLF line endings
+            }
             editorBox.Text = yaml;
         }
 
@@ -33,7 +39,11 @@ namespace FrameCoder
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                yaml = File.ReadAllText(ofd.FileName);
+                using (StreamReader streamReader = new StreamReader(ofd.FileName, Encoding.UTF8))
+                {
+                    string text = streamReader.ReadToEnd();
+                    yaml = Regex.Replace(text, @"\r\n|\n\r|\n|\r", "\r\n"); // ensure CRLF line endings
+                }
                 editorBox.Text = yaml;
             }
         }

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using Emgu.CV.CvEnum;
 using WK.Libraries.BetterFolderBrowserNS;
 
 namespace FrameCoder
@@ -19,17 +20,37 @@ namespace FrameCoder
         public VideoSplitter(string srcFile)
         {
             InitializeComponent();
-            SplitConfig = new VideoSplitConfig(0, 100, srcFile, Path.GetTempPath());
-            Cap = new VideoCapture(SplitConfig.SourceFile);
-            SplitConfig.FrameCount = (int)Cap.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
-            startFrameControl.Maximum = new decimal(SplitConfig.FrameCount);
-            nFramesControl.Maximum = new decimal(SplitConfig.FrameCount);
-            Cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, 0);
-            FirstFrame.Image = Cap.QuerySmallFrame();
-            Frames = new string[SplitConfig.NFrames];
-            FrameNums = new int[SplitConfig.NFrames];
+            SplitConfig = new VideoSplitConfig(srcFile);
 
-            // background worker stuff
+
+
+            // parse video properties (better use ffprobe?)
+            Cap = new VideoCapture(SplitConfig.SourceFile);
+            int fc = (int)Cap.GetCaptureProperty(CapProp.FrameCount);
+            int fps = (int)Cap.GetCaptureProperty(CapProp.Fps);
+
+            // save properties to splitconfig
+            SplitConfig.SourceFrameCount = fc;
+            SplitConfig.SourceFPS = fps;
+
+            // update UI based on video properties
+            decimal fcd = new decimal(fc);
+            startFrameControl.Maximum = fcd;
+            endFrameControl.Maximum = fcd;
+            endFrameControl.Value = fcd;
+            nFramesControl.Maximum = fcd;
+            frameIntervalControl.Maximum = fcd;
+
+            decimal ivld = new decimal(1000 / (double)fps);
+            timeIntervalControl.Maximum = new decimal(1000 * fc / (double)fps);
+            timeIntervalControl.Minimum = ivld;
+            timeIntervalControl.Value = ivld;
+
+            // load image into UI
+            Cap.SetCaptureProperty(CapProp.PosFrames, 0);
+            FirstFrame.Image = Cap.QuerySmallFrame();
+
+            // Init background worker for the conversion
             Worker.WorkerReportsProgress = true;
             Worker.WorkerSupportsCancellation = true;
             Worker.DoWork += Worker_DoWork;
@@ -38,21 +59,79 @@ namespace FrameCoder
 
         public class VideoSplitConfig
         {
-            public int StartFrame { get; set; }
-            public int NFrames { get; set; }
-            public int FrameCount { get; set; }
+            // User-specified settings
+            public UserPreference UserPref { get; set; }
+            public int UserStartFrame { get; set; }
+            public int UserEndFrame { get; set; }
+            public double UserTimeInterval { get; set; }
+            public int UserFrameInterval { get; set; }
+            public int UserNFrames { get; set; }
+            public string UserTargetFolder { get; set; }
+
+            // How to process the user settings to get frameidx
+            public enum UserPreference
+            {
+                NFrames,
+                TimeInterval,
+                FrameInterval
+            }
+
+            // Source properties
             public string SourceFile { get; set; }
-            public string TempFolder { get; set; }
-            public string TargetFolder { get; set; }
+            public int SourceFrameCount { get; set; }
+            public double SourceFPS { get; set; }
+
+            // Other properties
             public string Format { get; set; }
 
-            public VideoSplitConfig(int StartFrame, int NFrames, string SourceFile, string TempFolder)
+            // constructor
+            public VideoSplitConfig(string SourceFile)
             {
-                this.StartFrame = StartFrame;
-                this.NFrames = NFrames;
-                this.SourceFile = SourceFile;
-                this.TempFolder = TempFolder;
                 Format = ".jpg";
+                this.SourceFile = SourceFile;
+            }
+
+            // the magical method!
+            public int[] GetFrameIDX()
+            {
+                // TODO
+                switch (UserPref)
+                {
+                    case UserPreference.NFrames:
+                        {
+                            int FrameInterval = (UserEndFrame - UserStartFrame) / UserNFrames;
+                            int[] idx = new int[UserNFrames];
+                            for (int i = 0; i < UserNFrames; i++)
+                            {
+                                idx[i] = (i * FrameInterval) + UserStartFrame;
+                            }
+                            return idx;
+                        };
+                    case UserPreference.FrameInterval:
+                        {
+                            int NFrames = (int)Math.Floor((double)(UserEndFrame - UserStartFrame) / UserFrameInterval);
+                            int[] idx = new int[NFrames];
+                            for (int i = 0; i < NFrames; i++)
+                            {
+                                idx[i] = (i * UserFrameInterval) + UserStartFrame;
+                            }
+                            return idx;
+                        };
+                    case UserPreference.TimeInterval:
+                        {
+                            double TotalTime = 1000 * (UserEndFrame - UserStartFrame) / (double)SourceFPS;
+                            int NFrames = (int)Math.Floor(TotalTime / UserTimeInterval);
+                            int[] idx = new int[NFrames];
+                            for (int i = 0; i < NFrames; i++)
+                            {
+                                idx[i] = (int)Math.Floor((SourceFPS * i * UserTimeInterval / 1000)) + UserStartFrame;
+                            }
+                            return idx;
+                        };
+                    default:
+                        return new int[] { 1, 2, 3, 4, 5 };
+                }
+                
             }
         }
 
@@ -70,40 +149,41 @@ namespace FrameCoder
 
         public string GetFolder()
         {
-            return SplitConfig.TargetFolder;
+            return SplitConfig.UserTargetFolder;
         }
 
         private void GetFramesFromVideo()
         {
-            Frames = new string[SplitConfig.NFrames];
-            FrameNums = new int[SplitConfig.NFrames];
-            int width = SplitConfig.FrameCount.ToString().Length;
-            int stride = (SplitConfig.FrameCount - SplitConfig.StartFrame) / SplitConfig.NFrames;
-            for (int i = 0; i < SplitConfig.NFrames; i++)
+            // TODO: work with SplitConfig.GetFrameIDX();
+            FrameNums = SplitConfig.GetFrameIDX();
+            Frames = new string[FrameNums.Length];
+            int width = SplitConfig.SourceFrameCount.ToString().Length;
+            int i = 0;
+            foreach (int framenum in FrameNums)
             {
-                int framenum = i * stride + SplitConfig.StartFrame;
-                Cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, framenum);
+                // get frame
+                Cap.SetCaptureProperty(CapProp.PosFrames, framenum);
                 Mat frame = Cap.QueryFrame();
-                LoadFrameInWindow(frame, SplitConfig.NFrames, i);
-                if (SplitConfig.TargetFolder == null) break;
+
+                // load into interface
+                SetFrameLabelText("Frame " + i + " of " + FrameNums.Length + ".");
+                LastFrame.Image = frame;
+
+                // save to disk
+                if (SplitConfig.UserTargetFolder == null) return;
                 string imagename = Path.Combine(
-                    SplitConfig.TargetFolder,
+                    SplitConfig.UserTargetFolder,
                     (framenum + 1).ToString().PadLeft(width, "0"[0]) + SplitConfig.Format
                 );
                 Frames[i] = imagename;
-                FrameNums[i] = framenum;
                 frame.ToImage<Bgr, byte>().Save(imagename);
+
+                // forward
+                i++;
             }
         }
-
-        private void LoadFrameInWindow(Mat frame, int totalFrames, int currentFrameNum)
-        {
-            SetFrameLabelText("Frame " + currentFrameNum + " of " + totalFrames + ".");
-            LastFrame.Image = frame;
-        }
-
+        
         private delegate void SetFrameLabelTextCallback(string text);
-
         private void SetFrameLabelText(string text)
         {
             // pattern blatantly stolen from
@@ -144,9 +224,30 @@ namespace FrameCoder
             };
             if (bfb.ShowDialog() == DialogResult.OK)
             {
-                SplitConfig.TargetFolder = bfb.SelectedPath;
-                SplitConfig.NFrames = (int)nFramesControl.Value;
-                SplitConfig.StartFrame = (int)startFrameControl.Value - 1;
+                // Update SplitConfig user settings
+                SplitConfig.UserTargetFolder = bfb.SelectedPath;
+                SplitConfig.UserNFrames = (int)nFramesControl.Value;
+                SplitConfig.UserStartFrame = (int)startFrameControl.Value - 1;
+                SplitConfig.UserEndFrame = (int)endFrameControl.Value - 1;
+                SplitConfig.UserFrameInterval = (int)frameIntervalControl.Value;
+                SplitConfig.UserTimeInterval = (double)timeIntervalControl.Value;
+                switch (ControlTabs.SelectedTab.Name)
+                {
+                    case "NFramesTab":
+                        SplitConfig.UserPref = VideoSplitConfig.UserPreference.NFrames;
+                        break;
+                    case "FrameIntervalTab":
+                        SplitConfig.UserPref = VideoSplitConfig.UserPreference.FrameInterval;
+                        break;
+                    case "TimeIntervalTab":
+                        SplitConfig.UserPref = VideoSplitConfig.UserPreference.TimeInterval;
+                        break;
+                    default:
+                        SplitConfig.UserPref = VideoSplitConfig.UserPreference.NFrames;
+                        break;
+                }
+
+                // Do the conversion!
                 UseWaitCursor = true;
                 if (Worker.IsBusy)
                 {
@@ -156,21 +257,38 @@ namespace FrameCoder
             }
         }
 
-        private void startFrameControl_ValueChanged(object sender, EventArgs e)
-        {
-            Cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, (int)startFrameControl.Value - 1);
-            FirstFrame.Image = Cap.QuerySmallFrame();
-            int maxframes = SplitConfig.FrameCount + 1 - (int)startFrameControl.Value;
-            nFramesControl.Maximum = new decimal(maxframes);
-        }
-
         private void cancelButton_Click(object sender, EventArgs e)
         {
             if (Worker.IsBusy)
             {
                 Worker.CancelAsync();
             }
-            SplitConfig.TargetFolder = null;
+            SplitConfig.UserTargetFolder = null;
+        }
+
+        private void startFrameControl_ValueChanged(object sender, EventArgs e)
+        {
+            Cap.SetCaptureProperty(CapProp.PosFrames, (int)startFrameControl.Value - 1);
+            FirstFrame.Image = Cap.QuerySmallFrame();
+            int maxframes = (int)endFrameControl.Value - (int)startFrameControl.Value;
+            
+            // set maxima
+            nFramesControl.Maximum = new decimal(maxframes);
+            frameIntervalControl.Maximum = new decimal(maxframes);
+            timeIntervalControl.Maximum = new decimal(1000 * maxframes / SplitConfig.SourceFPS);
+        }
+
+        private void endFrameControl_ValueChanged(object sender, EventArgs e)
+        {
+            Cap.SetCaptureProperty(CapProp.PosFrames, (int)endFrameControl.Value - 1);
+            LastFrame.Image = Cap.QuerySmallFrame();
+            SetFrameLabelText("End Frame");
+            int maxframes = (int)endFrameControl.Value - (int)startFrameControl.Value;
+
+            // set maxima
+            nFramesControl.Maximum = new decimal(maxframes);
+            frameIntervalControl.Maximum = new decimal(maxframes);
+            timeIntervalControl.Maximum = new decimal(1000 * maxframes / SplitConfig.SourceFPS);
         }
     }
 }

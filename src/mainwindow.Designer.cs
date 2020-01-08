@@ -175,8 +175,8 @@
             // configEditorToolStripMenuItem
             // 
             this.configEditorToolStripMenuItem.Name = "configEditorToolStripMenuItem";
-            this.configEditorToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.configEditorToolStripMenuItem.Text = "Data entry configuration";
+            this.configEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configEditorToolStripMenuItem.Text = "Data entry";
             this.configEditorToolStripMenuItem.Click += new System.EventHandler(this.configEditorToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -191,14 +191,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.aboutToolStripMenuItem.Text = "About framecoder";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // howToUseToolStripMenuItem
             // 
             this.howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.howToUseToolStripMenuItem.Text = "How to use";
             this.howToUseToolStripMenuItem.Click += new System.EventHandler(this.howToUseToolStripMenuItem_Click);
             // 

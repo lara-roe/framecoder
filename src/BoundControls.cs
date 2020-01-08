@@ -5,12 +5,15 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using YamlDotNet.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FrameCoder
 {
     public class BoundControls
     {
         public string yaml;
+        private string yaml_fallback;
         private GroupBox parent;
         private List<YamlControl> yamlControls;
 
@@ -18,6 +21,12 @@ namespace FrameCoder
         {
             // constructor
             parent = Parent;
+            string fallback_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "config.default.yaml");
+            using (StreamReader streamReader = new StreamReader(fallback_path, Encoding.UTF8))
+            {
+                string text = streamReader.ReadToEnd();
+                yaml_fallback = Regex.Replace(text, @"\r\n|\n\r|\n|\r", "\r\n"); // ensure CRLF line endings
+            }
         }
 
         public class YamlControl
@@ -60,13 +69,29 @@ namespace FrameCoder
 
         public void LoadYamlFile(string yamlPath)
         {
-            yaml = File.ReadAllText(yamlPath);
+            using (StreamReader streamReader = new StreamReader(yamlPath, Encoding.UTF8))
+            {
+                string text = streamReader.ReadToEnd();
+                yaml = Regex.Replace(text, @"\r\n|\n\r|\n|\r", "\r\n"); // ensure CRLF line endings
+            }
         }
 
         public void ParseYaml()
         {
             IDeserializer deserializer = new DeserializerBuilder().Build();
-            yamlControls = deserializer.Deserialize<List<YamlControl>>(yaml);
+            try
+            {
+                yamlControls = deserializer.Deserialize<List<YamlControl>>(yaml);
+            }
+            catch (Exception e)
+            {
+                yaml = yaml_fallback;
+                yamlControls = deserializer.Deserialize<List<YamlControl>>(yaml);
+                MessageBox.Show(
+                    "Could not parse yaml. Falling back to default data entry config. Error:" + 
+                    Environment.NewLine + Environment.NewLine + 
+                    e.Message, "Yaml parsing error.");
+            }
         }
 
 
